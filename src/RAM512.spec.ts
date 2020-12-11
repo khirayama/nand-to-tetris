@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { RAM512 } from './RAM512';
 
 describe('RAM512', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     const ram512 = new RAM512();
 
     assert.deepEqual(ram512.write([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 0, [0, 0, 0, 0, 0, 0, 0, 0, 0]), [

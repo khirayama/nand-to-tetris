@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { mux16 } from './mux16';
 
 describe('16-bit Mux', function () {
-  it('should return collect Bus16', function () {
+  it('should return correct Bus16', function () {
     assert.deepEqual(
       mux16([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0),
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

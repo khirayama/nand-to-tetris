@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { or16 } from './or16';
 
 describe('16-bit Or', function () {
-  it('should return collect Bus16', function () {
+  it('should return correct Bus16', function () {
     assert.deepEqual(
       or16([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

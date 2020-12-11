@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { mux8way16 } from './mux8way16';
 
 describe('mux8way16', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     assert.deepEqual(
       mux8way16(
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

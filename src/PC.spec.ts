@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { PC } from './PC';
 
 describe('PC', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     const pc = new PC();
     assert.deepEqual(pc.write([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 1, 0, 0), [
       0,

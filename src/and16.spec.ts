@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { and16 } from './and16';
 
 describe('16-bit And', function () {
-  it('should return collect Bus16', function () {
+  it('should return correct Bus16', function () {
     assert.deepEqual(
       and16([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

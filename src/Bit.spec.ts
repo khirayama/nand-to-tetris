@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { Bit } from './Bit';
 
 describe('Bit', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     const bit = new Bit();
     assert.equal(bit.write(1, 0), 0);
     assert.equal(bit.write(1, 0), 0);

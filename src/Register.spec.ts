@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { Register } from './Register';
 
 describe('Register', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     const register = new Register();
     assert.deepEqual(register.write([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], 0), [
       0,

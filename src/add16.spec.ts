@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { add16 } from './add16';
 
 describe('Add16', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     assert.deepEqual(
       add16([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

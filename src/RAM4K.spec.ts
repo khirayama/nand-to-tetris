@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { RAM4K } from './RAM4K';
 
 describe('RAM4K', function () {
-  it('should return collect Binary', function () {
+  it('should return correct Binary', function () {
     const ram4K = new RAM4K();
 
     assert.deepEqual(
