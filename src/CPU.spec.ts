@@ -1,4 +1,4 @@
-import { assert } from 'power-assert';
+import assert from 'power-assert';
 import { CPU } from './CPU';
 
 describe('CPU', function () {
