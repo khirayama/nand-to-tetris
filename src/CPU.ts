@@ -15,7 +15,7 @@ export class CPU {
   private pc: PC = new PC();
 
   write(inM: Bus16, instruction: Bus16, reset: Binary) {
-    const loadPC = 0;
+    let loadPC: Binary = 0;
     let aluout: Bus16 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     const writeM = and(instruction[3], instruction[15]);
@@ -45,5 +45,17 @@ export class CPU {
     const outM = result[0];
     const zr = result[1];
     const ng = result[2];
+
+    const notzr = not(zr);
+    const notng = not(ng);
+    const w1 = and(instruction[2], ng);
+    const w2 = and(instruction[0], notng);
+    const w3 = or(w1, w2);
+    const w4 = and(notzr, w3);
+    const w5 = and(instruction[1], zr);
+    const w6 = or(w4, w5);
+    loadPC = and(instruction[15], w6);
+
+    return [outM, writeM, addressM, pc];
   }
 }
