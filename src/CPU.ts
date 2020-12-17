@@ -1,4 +1,4 @@
-import { Binary, Bus16 } from './types';
+import { Binary, Binary15, Bus16 } from './types';
 import { and } from './and';
 import { not } from './not';
 import { or } from './or';
@@ -14,7 +14,7 @@ export class CPU {
 
   private pc: PC = new PC();
 
-  write(inM: Bus16, instruction: Bus16, reset: Binary) {
+  public write(inM: Bus16, instruction: Bus16, reset: Binary): [Bus16, Binary, Binary15, Binary15] {
     let loadPC: Binary = 0;
     let aluout: Bus16 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
