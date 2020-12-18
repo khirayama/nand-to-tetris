@@ -18,7 +18,7 @@ describe('CPU', function () {
   it('should work correcty', function () {
     const cpu = new CPU();
 
-    cpu.write(zero(), [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], 0);
+    cpu.write(zero(), b('0000 0000 0000 0010'), 0);
     // inputPins
     assert.deepEqual(cpu.debug.inputPins.inM, b('0000 0000 0000 0000'));
     assert.deepEqual(cpu.debug.inputPins.instruction, b('0000 0000 0000 0010'));
@@ -52,7 +52,7 @@ describe('CPU', function () {
     assert.deepEqual(cpu.debug.aregister, b('0000 0000 0000 0010'));
     assert.deepEqual(cpu.debug.dregister, b('0000 0000 0000 0000'));
 
-    cpu.write(zero(), [1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], 0);
+    cpu.write(zero(), b('1110 1100 0001 0000'), 0);
     // inputPins
     assert.deepEqual(cpu.debug.inputPins.inM, b('0000 0000 0000 0000'));
     assert.deepEqual(cpu.debug.inputPins.instruction, b('1110 1100 0001 0000'));
