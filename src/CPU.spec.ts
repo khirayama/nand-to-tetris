@@ -1,18 +1,9 @@
 import { Bus16 } from './types';
 import { CPU } from './CPU';
 
+import {zero, b} from './helpers';
+
 import assert = require('assert');
-
-function zero(): Bus16 {
-  return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as Bus16;
-}
-
-function b(str: string): Bus16 {
-  return str
-    .replace(/ /g, '')
-    .split('')
-    .map((n) => Number(n)) as Bus16;
-}
 
 describe('CPU', function () {
   it('should work correcty with 1010 1010 1010 1010', function () {
