@@ -17,16 +17,14 @@ export class CPU {
   private pc: PC = new PC();
 
   public write(inM: Bus16, instruction: Bus16, reset: Binary): [Bus16, Binary, Binary15, Binary15] {
-    console.log('--- instruction ---', instruction.join(''));
     // 1000 1000 1000 1000
+    const writeM = and(instruction[12], instruction[0]);
+
     const noti15 = not(instruction[0]);
     const loadA = or(instruction[10], noti15);
-    const loadD = and(instruction[11], instruction[0]);
-    const writeM = and(instruction[12], instruction[0]);
 
     let mux0out = mux16(instruction, this.dregister.read(), instruction[0]);
     const aout = this.aregister.write(mux0out, loadA);
-    const addressM = aout.concat().slice(1, 16) as Binary15;
     const mux1out = mux16(aout, inM, instruction[3]);
 
     const result = alu(
@@ -40,12 +38,14 @@ export class CPU {
       instruction[9],
     );
     const aluout = result[0];
-    const outM = result[0];
+    const outM = aluout;
     const zr = result[1];
     const ng = result[2];
 
-    mux0out = mux16(instruction, aluout, instruction[0]);
+    const loadD = and(instruction[11], instruction[0]);
     const dout = this.dregister.write(aluout, loadD);
+
+    mux0out = mux16(instruction, aluout, instruction[0]);
 
     const notzr = not(zr);
     const notng = not(ng);
@@ -58,6 +58,8 @@ export class CPU {
     const loadPC = and(instruction[0], w6);
     const tmp = this.pc.write(aout, 1, loadPC, reset);
     const pc: Binary15 = tmp.concat().slice(1, 16) as Binary15;
+
+    const addressM = aout.concat().slice(1, 16) as Binary15;
 
     this.debug = {
       inputPins: {
