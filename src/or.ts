@@ -1,6 +1,6 @@
 import { Binary } from './types';
-import { Nand } from './Nand';
+import { nand } from './nand';
 
 export function Or(a: Binary, b: Binary): Binary {
-  return Nand(Nand(a, a), Nand(b, b));
+  return nand(nand(a, a), nand(b, b));
 }
