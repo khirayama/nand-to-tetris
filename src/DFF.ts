@@ -6,7 +6,7 @@ export class DFF {
 
   private prev: Binary = 0;
 
-  public write(input: Binary, clock: Clock): void {
+  public write(clock: Clock, input: Binary): void {
     if (clock.get() === 0) {
       this.prev = this.state;
       this.state = input;

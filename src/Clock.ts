@@ -12,7 +12,13 @@ export class Clock {
     return this.state;
   }
 
-  public next(): void {
+  public next(): Clock {
     this.state = this.state === 0 ? 1 : 0;
+    return this;
+  }
+
+  public reset(): Clock {
+    this.state = 0;
+    return this;
   }
 }
