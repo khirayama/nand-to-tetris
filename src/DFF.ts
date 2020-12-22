@@ -6,21 +6,15 @@ export class DFF {
 
   private prev: Binary = 0;
 
-  private clock: Clock;
-
-  constructor(clock: Clock) {
-    this.clock = clock;
-  }
-
-  public write(input: Binary): void {
-    if (this.clock.get() === 0) {
+  public write(input: Binary, clock: Clock): void {
+    if (clock.get() === 0) {
       this.prev = this.state;
       this.state = input;
     }
   }
 
-  public read(): Binary {
-    if (this.clock.get() === 0) {
+  public read(clock: Clock): Binary {
+    if (clock.get() === 0) {
       return this.prev;
     }
     return this.state;

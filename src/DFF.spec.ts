@@ -6,19 +6,19 @@ const clock = new Clock();
 
 describe('DFF', function () {
   it('should return correct Binary', function () {
-    const dff = new DFF(clock);
-    dff.write(1);
-    assert.equal(dff.read(), 0);
+    const dff = new DFF();
+    dff.write(1, clock);
+    assert.equal(dff.read(clock), 0);
     clock.next();
 
-    dff.write(1);
-    assert.equal(dff.read(), 1);
+    dff.write(1, clock);
+    assert.equal(dff.read(clock), 1);
     clock.next();
 
-    dff.write(0);
-    assert.equal(dff.read(), 1);
+    dff.write(0, clock);
+    assert.equal(dff.read(clock), 1);
     clock.next();
 
-    assert.equal(dff.read(), 0);
+    assert.equal(dff.read(clock), 0);
   });
 });
