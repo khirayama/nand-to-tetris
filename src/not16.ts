@@ -1,6 +1,6 @@
-import { Bus16 } from './types';
+import { Word } from './types';
 import { not } from './not';
 
-export function not16(input: Bus16): Bus16 {
-  return input.map((i) => not(i)) as Bus16;
+export function not16(input: Word): Word {
+  return input.map((i) => not(i)) as Word;
 }
