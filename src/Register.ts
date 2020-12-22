@@ -1,4 +1,5 @@
-import { Binary, Bus16 } from './types';
+import { Binary, Word } from './types';
+import { Clock } from './Clock';
 import { Bit } from './Bit';
 
 export class Register {
@@ -21,15 +22,14 @@ export class Register {
     new Bit(),
   ];
 
-  public write(input: Bus16, load: Binary): Bus16 {
+  public write(clock: Clock, input: Word, load: Binary): void {
     for (let i = 0; i < this.bits.length; i += 1) {
       const bit: Bit = this.bits[i];
-      bit.write(input[i], load);
+      bit.write(clock, input[i], load);
     }
-    return this.read();
   }
 
-  public read(): Bus16 {
-    return this.bits.map((bit) => bit.read()) as Bus16;
+  public read(clock: Clock): Word {
+    return this.bits.map((bit) => bit.read(clock)) as Word;
   }
 }
