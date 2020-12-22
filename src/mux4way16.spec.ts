@@ -1,5 +1,5 @@
 import assert from 'power-assert';
-import { Word, Binary2, Binary } from './types';
+import { Word, Binary2 } from './types';
 import { b } from './helpers';
 import { mux4way16 } from './mux4way16';
 
