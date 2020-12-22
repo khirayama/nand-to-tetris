@@ -1,9 +1,19 @@
 - 論理回路
- - nand
- - not
- - and
- - or
- - xor
+  - 基本ゲート
+    - nand
+    - not
+    - and
+    - or
+    - xor
+    - mux
+    - dmux
+  - 多ビット基本ゲート
+    - not16
+    - and16
+    - or16
+    - mux16
+  - 多入力基本ゲート
+    - or8way
 
 - 論理回路までは状態を持たないため関数で表現
 - 順序回路は状態を持つため、classで表現
