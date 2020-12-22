@@ -1,4 +1,5 @@
-import { Binary, Bus16, Bus8 } from './types';
+import { Binary, Binary8, Word } from './types';
+import { b } from './helpers';
 import { mux16 } from './mux16';
 import { not16 } from './not16';
 import { and16 } from './and16';
@@ -8,16 +9,16 @@ import { or } from './or';
 import { not } from './not';
 
 export function alu(
-  x: Bus16,
-  y: Bus16,
+  x: Word,
+  y: Word,
   zx: Binary,
   nx: Binary,
   zy: Binary,
   ny: Binary,
   f: Binary,
   no: Binary,
-): [Bus16, /* zr*/ Binary, /* ng*/ Binary] {
-  const z: Bus16 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+): [Word, /* zr */ Binary, /* ng */ Binary] {
+  const z: Word = b<Word>('0000 0000 0000 0000');
 
   const w1 = mux16(x, z, zx);
   const w2 = mux16(y, z, zy);
@@ -34,8 +35,8 @@ export function alu(
   const notw5 = not16(w5);
   const out = mux16(w5, notw5, no);
 
-  const out0to7 = out.concat().splice(8, 8) as Bus8;
-  const out8to15 = out.concat().splice(0, 8) as Bus8;
+  const out0to7 = out.concat().splice(8, 8) as Binary8;
+  const out8to15 = out.concat().splice(0, 8) as Binary8;
   const ng = out[0];
 
   const or0to7 = or8way(out0to7);
