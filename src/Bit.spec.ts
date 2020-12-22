@@ -1,29 +1,15 @@
 import assert from 'power-assert';
-import { Clock } from './Clock';
 import { Bit } from './Bit';
 
 describe('Bit', function () {
-  it('should return correct Binary', function () {
-    const clock = new Clock();
+  it('should return collect Binary', function () {
     const bit = new Bit();
-
-    bit.write(clock, 1, 0);
-    assert.equal(bit.read(clock), 0);
-    clock.next();
-
-    bit.write(clock, 1, 0);
-    assert.equal(bit.read(clock), 0);
-    clock.next();
-
-    bit.write(clock, 1, 1);
-    assert.equal(bit.read(clock), 0);
-    clock.next();
-
-    bit.write(clock, 1, 0);
-    assert.equal(bit.read(clock), 1);
-    clock.next();
-
-    bit.write(clock, 1, 0);
-    assert.equal(bit.read(clock), 1);
+    assert.equal(bit.write(1, 0), 0);
+    assert.equal(bit.write(1, 0), 0);
+    assert.equal(bit.write(1, 1), 0);
+    assert.equal(bit.write(1, 0), 1);
+    assert.equal(bit.write(1, 0), 1);
+    assert.equal(bit.write(0, 1), 1);
+    assert.equal(bit.write(1, 0), 0);
   });
 });

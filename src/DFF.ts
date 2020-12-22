@@ -1,22 +1,15 @@
 import { Binary } from './types';
-import { Clock } from './Clock';
 
 export class DFF {
   private state: Binary = 0;
 
-  private prev: Binary = 0;
-
-  public write(clock: Clock, input: Binary): void {
-    if (clock.get() === 0) {
-      this.prev = this.state;
-      this.state = input;
-    }
+  public write(input: Binary): Binary {
+    const tmp = this.state;
+    this.state = input;
+    return tmp;
   }
 
-  public read(clock: Clock): Binary {
-    if (clock.get() === 0) {
-      return this.prev;
-    }
+  public read(): Binary {
     return this.state;
   }
 }
