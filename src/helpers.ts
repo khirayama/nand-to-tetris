@@ -1,14 +1,14 @@
-import { Bus16 } from './types';
-
-// TODO Generics で return valueをかえるように
-export function zero(): Bus16 {
-  return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] as Bus16;
+export function zero<T>(len: number = 16): T {
+  const result = [];
+  for (let i = 0; i < len; i += 1) {
+    result.push(0);
+  }
+  return (result as unknown) as T;
 }
 
-// TODO Generics で return valueをかえるように
-export function b(str: string): Bus16 {
-  return str
+export function b<T>(str: string): T {
+  return (str
     .replace(/ /g, '')
     .split('')
-    .map((n) => Number(n)) as Bus16;
+    .map((n) => Number(n)) as unknown) as T;
 }
