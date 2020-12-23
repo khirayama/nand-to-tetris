@@ -1,9 +1,7 @@
-import { Binary, Bus8, Bus16 } from './types';
+import { Binary, Binary8, Word, Word8 } from './types';
 import { dmux8way } from './dmux8way';
 import { mux8way16 } from './mux8way16';
 import { Register } from './Register';
-
-type Bus16x8 = [Bus16, Bus16, Bus16, Bus16, Bus16, Bus16, Bus16, Bus16];
 
 export class RAM8 {
   private registers: [Register, Register, Register, Register, Register, Register, Register, Register] = [
@@ -17,11 +15,19 @@ export class RAM8 {
     new Register(),
   ];
 
-  public write(input: Bus16, load: Binary, address: [Binary, Binary, Binary]): Bus16 {
-    const res: Bus8 = dmux8way(load, address);
-    const tmp: Bus16x8 = this.registers.map((register: Register, i: number) => {
+  public write(input: Word, load: Binary, address: [Binary, Binary, Binary]): Word {
+    const res: Binary8 = dmux8way(load, address);
+    const tmp: Word8 = this.registers.map((register: Register, i: number) => {
       return register.write(input, res[i]);
-    }) as Bus16x8;
+    }) as Word8;
     return mux8way16(...tmp, address);
+  }
+
+  public read(): Word8 {
+    const result: Word[] = [];
+    for (const register of this.registers) {
+      result.push(register.read());
+    }
+    return result as Word8;
   }
 }
