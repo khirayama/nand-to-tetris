@@ -1,5 +1,6 @@
 import { Binary, Word } from './types';
-import { Bit } from './Bit';
+import { Clock } from './Clock';
+import { Bit } from './Bit.clock';
 
 export class Register {
   public bits: [Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit, Bit] = [
@@ -21,16 +22,14 @@ export class Register {
     new Bit(),
   ];
 
-  public write(input: Word, load: Binary): Word {
-    const tmp = this.read();
+  public write(clock: Clock, input: Word, load: Binary): void {
     for (let i = 0; i < this.bits.length; i += 1) {
       const bit: Bit = this.bits[i];
-      bit.write(input[i], load);
+      bit.write(clock, input[i], load);
     }
-    return tmp;
   }
 
-  public read(): Word {
-    return this.bits.map((bit) => bit.read()) as Word;
+  public read(clock: Clock): Word {
+    return this.bits.map((bit) => bit.read(clock)) as Word;
   }
 }
