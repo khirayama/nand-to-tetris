@@ -15,6 +15,21 @@
   - 多入力基本ゲート
     - or8way
     - mux4way16
+    - mux8way16
+    - dmux4way
+    - dmux8way
+  - 加算器
+    - halfAdder
+    - fullAdder
+    - add16
+    - inc16
+    - alu
+- 順序回路
+  - DFF
+  - Bit
+  - Register
+  - RAMn(8/64/512/4K/16K)
+  - PC
 
 - 論理回路までは状態を持たないため関数で表現
 - 順序回路は状態を持つため、classで表現
