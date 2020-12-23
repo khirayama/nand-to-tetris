@@ -1,4 +1,4 @@
-import { Binary, Binary15, Bus16 } from './types';
+import { Binary, Binary15, Word } from './types';
 import { and } from './and';
 import { not } from './not';
 import { or } from './or';
@@ -16,7 +16,7 @@ export class CPU {
 
   private pc: PC = new PC();
 
-  public write(inM: Bus16, instruction: Bus16, reset: Binary): [Bus16, Binary, Binary15, Binary15] {
+  public write(inM: Word, instruction: Word, reset: Binary): [Word, Binary, Binary15, Binary15] {
     // 1000 1000 1000 1000
     const writeM = and(instruction[12], instruction[0]);
 
@@ -24,7 +24,8 @@ export class CPU {
     const loadA = or(instruction[10], noti15);
 
     let mux0out = mux16(instruction, this.dregister.read(), instruction[0]);
-    const aout = this.aregister.write(mux0out, loadA);
+    this.aregister.write(mux0out, loadA);
+    const aout = this.aregister.read();
     const mux1out = mux16(aout, inM, instruction[3]);
 
     const result = alu(
@@ -43,7 +44,8 @@ export class CPU {
     const ng = result[2];
 
     const loadD = and(instruction[11], instruction[0]);
-    const dout = this.dregister.write(aluout, loadD);
+    this.dregister.write(aluout, loadD);
+    const dout = this.dregister.read();
 
     mux0out = mux16(instruction, aluout, instruction[0]);
 
@@ -56,8 +58,8 @@ export class CPU {
     const w5 = and(instruction[14], zr);
     const w6 = or(w4, w5);
     const loadPC = and(instruction[0], w6);
-    const tmp = this.pc.write(aout, 1, loadPC, reset);
-    const pc: Binary15 = tmp.concat().slice(1, 16) as Binary15;
+    this.pc.write(aout, 1, loadPC, reset);
+    const pc: Binary15 = this.pc.read().concat().slice(1, 16) as Binary15;
 
     const addressM = aout.concat().slice(1, 16) as Binary15;
 
@@ -100,7 +102,7 @@ export class CPU {
     return [outM, writeM, addressM, pc];
   }
 
-  public read(): [Bus16, Bus16] {
+  public read(): [Word, Word] {
     return [this.aregister.read(), this.dregister.read()];
   }
 
