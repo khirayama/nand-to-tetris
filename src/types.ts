@@ -16,6 +16,8 @@ export type Binary12 = [...Binary8, ...Binary4];
 
 export type Binary13 = [...Binary12, Binary];
 
+export type Binary14 = [...Binary12, ...Binary2];
+
 export type Binary15 = [...Binary12, ...Binary3];
 
 export type Binary16 = [...Binary8, ...Binary8];
