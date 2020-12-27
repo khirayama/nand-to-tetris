@@ -1,4 +1,4 @@
-import { Binary, Binary2, Binary3, Binary6, Word } from './types';
+import { Binary, Binary2, Binary3, Binary6, Binary15, Word } from './types';
 import { zero } from './helpers';
 import { Clock } from './Clock';
 import { Register } from './Register.clock';
@@ -55,6 +55,16 @@ export class CPU {
     // NOTE ここ間違ってるかも
     const newClock = new Clock();
     newClock.next();
+  }
+
+  public read(clock: Clock) {
+    const writeDest = this.writeDst;
+    const writeM = writeDest[0];
+    const addressM = writeDest.slice(1) as Binary15;
+    const pc = this.pc.read(clock);
+    const count = pc.slice(1) as Binary15;
+
+    return [this.outM, writeM, addressM, count];
   }
 
   private decode(instruction: Word): [Binary, Binary2, Binary, Binary6, Binary3, Binary3] {
