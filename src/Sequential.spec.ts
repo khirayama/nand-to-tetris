@@ -7,6 +7,8 @@ import { Bit } from './Bit.clock';
 import { Register } from './Register.clock';
 import { RAM8 } from './RAM8.clock';
 import { RAM64 } from './RAM64.clock';
+import { PC } from './PC.clock';
+import { inc16 } from './inc16';
 
 describe('Clock', function () {
   it('work correctly', function () {
@@ -257,5 +259,76 @@ describe('RAM64', function () {
     assert.deepEqual(ram64.read(clock, [0, 0, 1, 0, 0, 1]), wordi);
 
     clock.next();
+  });
+});
+
+describe('RAM512', function () {
+  it.skip('work correctly', function () {});
+});
+
+describe('RAM4K', function () {
+  it.skip('work correctly', function () {});
+});
+
+describe('RAM16K', function () {
+  it.skip('work correctly', function () {});
+});
+
+describe('PC', function () {
+  it('work correctly', function () {
+    const clock = new Clock();
+    const pc = new PC();
+
+    const word0 = b<Word>('0000 0000 0000 0000');
+    const word1 = b<Word>('0000 0000 0000 0001');
+    const input = b<Word>('0010 0100 1001 0010');
+
+    pc.write(clock, word0, 1, 0, 0);
+    assert.deepEqual(pc.read(clock), word0);
+
+    clock.next();
+
+    pc.write(clock, word0, 1, 0, 0);
+    assert.deepEqual(pc.read(clock), word1);
+
+    clock.next();
+
+    pc.write(clock, word0, 1, 0, 0);
+    assert.deepEqual(pc.read(clock), inc16(word0));
+
+    clock.next();
+
+    pc.write(clock, word0, 1, 0, 0);
+    assert.deepEqual(pc.read(clock), inc16(inc16(word0)));
+
+    clock.next();
+
+    pc.write(clock, word0, 0, 0, 1);
+    assert.deepEqual(pc.read(clock), inc16(inc16(word0)));
+
+    clock.next();
+
+    pc.write(clock, input, 0, 1, 0);
+    assert.deepEqual(pc.read(clock), word0);
+
+    clock.next();
+
+    pc.write(clock, input, 0, 1, 0);
+    assert.deepEqual(pc.read(clock), word0);
+
+    clock.next();
+
+    pc.write(clock, word0, 0, 0, 0);
+    assert.deepEqual(pc.read(clock), input);
+
+    clock.next();
+
+    pc.write(clock, word0, 0, 0, 0);
+    assert.deepEqual(pc.read(clock), input);
+
+    clock.next();
+
+    pc.write(clock, word0, 0, 0, 0);
+    assert.deepEqual(pc.read(clock), input);
   });
 });
