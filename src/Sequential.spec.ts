@@ -5,6 +5,7 @@ import { Clock } from './Clock';
 import { DFF } from './DFF.clock';
 import { Bit } from './Bit.clock';
 import { Register } from './Register.clock';
+import { RAM8 } from './RAM8.clock';
 
 describe('Clock', function () {
   it('work correctly', function () {
@@ -107,5 +108,79 @@ describe('Register', function () {
 
     register.write(clock, b<Word>('1111 1111 1111 1111'), 0);
     assert.deepEqual(register.read(clock), b<Word>('0000 0000 0000 0000'));
+  });
+});
+
+describe('RAM8', function () {
+  it('work correctly', function () {
+    const clock = new Clock();
+    const ram8 = new RAM8();
+
+    const wordi = b<Word>('1010 1100 0101 0011');
+    const wordo = b<Word>('0101 0011 1010 1100');
+    const word0 = b<Word>('0000 0000 0000 0000');
+
+    ram8.write(clock, wordi, 1, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), word0);
+
+    clock.next();
+
+    // Nothing happened
+    ram8.write(clock, word0, 0, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), wordi);
+
+    clock.next();
+
+    ram8.write(clock, wordo, 0, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), wordi);
+
+    clock.next();
+
+    // Nothing happened
+    ram8.write(clock, wordo, 1, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), wordi);
+
+    clock.next();
+
+    ram8.write(clock, wordo, 1, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), wordi);
+
+    clock.next();
+
+    // Nothing happened
+    ram8.write(clock, wordo, 1, [0, 0, 0]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 0]), wordo);
+
+    clock.next();
+
+    ram8.write(clock, wordo, 1, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), word0);
+
+    clock.next();
+
+    ram8.write(clock, wordi, 0, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), wordo);
+
+    clock.next();
+
+    ram8.write(clock, wordi, 0, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), wordo);
+
+    clock.next();
+
+    ram8.write(clock, wordi, 1, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), wordo);
+
+    clock.next();
+
+    ram8.write(clock, wordi, 1, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), wordo);
+
+    clock.next();
+
+    ram8.write(clock, wordi, 1, [0, 0, 1]);
+    assert.deepEqual(ram8.read(clock, [0, 0, 1]), wordi);
+
+    clock.next();
   });
 });
