@@ -22,10 +22,11 @@ export class CPU {
 
   public write(clock: Clock, inM: Word, instruction: Word, reset: Binary) {
     const [i, /* xx, */ a, cccccc, ddd, jjj] = this.decode(instruction);
-    console.log(instruction.join(''));
-    console.log(i, a, cccccc, ddd, jjj);
+    console.log('instruction', instruction.join(''));
+    console.log('decoded instruction', '' + i, '' + a, cccccc.join(''), ddd.join(''), jjj.join(''));
 
     const tmpClock = clock.get() === 0 ? new Clock().next() : new Clock();
+    console.log('tmpClock', '' + tmpClock.get());
     const [aluout, zr, ng] = alu(
       this.dRegister.read(tmpClock),
       mux16(this.aRegister.read(tmpClock), inM, a),
@@ -36,6 +37,9 @@ export class CPU {
       cccccc[4],
       cccccc[5],
     );
+    console.log('aluout', aluout.join(''));
+    console.log('zr', '' + zr);
+    console.log('ng', '' + ng);
     const ps = not(or(zr, ng));
     if (clock.get() === 0) {
       this.outM = mux16(this.outM, aluout, i);
