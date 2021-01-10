@@ -1,11 +1,15 @@
 use std::env;
 use std::process;
+use std::fs::File;
+use std::io::prelude::*;
 
 fn main() {
     let filename = get_filename();
-    println!("{}", filename);
 
     validate_filename(&filename);
+
+    let contents = read_source(&filename);
+    println!("{}", contents);
 }
 
 fn get_filename() -> String {
@@ -22,4 +26,18 @@ fn validate_filename(filename: &str) {
         println!("Invalid filename. Expected '*.asm': {:?}", filename);
         process::exit(1);
     }
+}
+
+fn read_source(filename: &str) -> String {
+    let mut contents = String::new();
+    File::open(filename).unwrap_or_else(|err| {
+        println!("Cannot read file: {}", err);
+        process::exit(1);
+    })
+    .read_to_string(&mut contents)
+        .unwrap_or_else(|err| {
+        println!("Cannot read file: {}", err);
+        process::exit(1);
+        });
+    contents
 }
