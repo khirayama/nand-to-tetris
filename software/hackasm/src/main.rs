@@ -4,6 +4,8 @@ use std::process;
 fn main() {
     let filename = get_filename();
     println!("{}", filename);
+
+    validate_filename(&filename);
 }
 
 fn get_filename() -> String {
@@ -13,4 +15,11 @@ fn get_filename() -> String {
         process::exit(1);
     });
     return String::from(name);
+}
+
+fn validate_filename(filename: &str) {
+    if !filename.ends_with(".asm") {
+        println!("Invalid filename. Expected '*.asm': {:?}", filename);
+        process::exit(1);
+    }
 }
