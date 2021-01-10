@@ -14,7 +14,7 @@ fn get_filename() -> String {
         println!("Require arguments.");
         process::exit(1);
     });
-    return String::from(name);
+    String::from(name)
 }
 
 fn validate_filename(filename: &str) {
