@@ -1,3 +1,6 @@
+use hackasm::symbols::Symbols;
+// use hackasm::parser;
+
 use std::env;
 use std::process;
 use std::fs::File;
@@ -10,6 +13,8 @@ fn main() {
 
     let contents = read_source(&filename);
     println!("{}", contents);
+
+    let mut symbols = Symbols::new();
 }
 
 fn get_filename() -> String {
