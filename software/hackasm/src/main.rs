@@ -1,5 +1,5 @@
 use hackasm::symbols::Symbols;
-// use hackasm::parser;
+use hackasm::parser;
 
 use std::env;
 use std::process;
@@ -15,6 +15,8 @@ fn main() {
     println!("{}", contents);
 
     let mut symbols = Symbols::new();
+
+    let (nodes, errors) = parser::parse(&contents, &mut symbols);
 }
 
 fn get_filename() -> String {
