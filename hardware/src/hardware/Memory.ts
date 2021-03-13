@@ -1,4 +1,4 @@
-import { Bus16, Binary, Binary15, Binary13 } from './types';
+import { Binary, Binary13, Binary15, Binary16 } from './types';
 import { dmux4way } from './dmux4way';
 import { or } from './or';
 import { RAM16K } from './RAM16K';
@@ -10,7 +10,7 @@ export class Memory {
 
   private screen: Screen = new Screen();
 
-  public write(input: Bus16, load: Binary, address: Binary15) {
+  public write(input: Binary16, load: Binary, address: Binary15) {
     const [loadram0, loadram1, loadscreen] = dmux4way(load, [address[13], address[14]]);
     const loadram = or(loadram0, loadram1);
     const ramout = this.ram.write(input, loadram, address);

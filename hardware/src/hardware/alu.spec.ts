@@ -8,7 +8,7 @@ import { alu } from './alu';
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  */
 describe('ALU', function () {
-  it('should return correct [Bus16, Binary, Binary]', function () {
+  it('should return correct [Binary16, Binary, Binary]', function () {
     // zx = 0, nx = 0, zy = 0, ny = 0, f = 0, no = 0
     assert.deepEqual(alu(b<Word>('0000 0000 0000 0000'), b<Word>('0000 0000 0000 0000'), 0, 0, 0, 0, 0, 0), [
       b<Word>('0000 0000 0000 0000'),
