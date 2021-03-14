@@ -29,4 +29,9 @@ export class Memory {
   public display() {
     this.screen.display();
   }
+
+  public read(address: Binary15) {
+    const tmp = this.ram.read(address);
+    return tmp;
+  }
 }
