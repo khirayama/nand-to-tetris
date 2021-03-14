@@ -23,11 +23,7 @@ export class RAM8 {
     return mux8way16(...tmp, address);
   }
 
-  public read(): Word8 {
-    const result: Word[] = [];
-    for (const register of this.registers) {
-      result.push(register.read());
-    }
-    return result as Word8;
+  public read(address: Binary3): Word {
+    return mux8way16(...(this.registers.map((register) => register.read()) as Word8), address);
   }
 }
