@@ -6,6 +6,8 @@ import { alu } from './alu';
 import { mux16 } from './mux16';
 import { PC } from './PC';
 import { Register } from './Register';
+import { Memory } from './Memory';
+import { b2s } from './helpers';
 
 export class CPU {
   public debug: any;
@@ -15,6 +17,12 @@ export class CPU {
   private dregister: Register = new Register();
 
   private pc: PC = new PC();
+
+  private memory: Memory;
+
+  constructor(memory: Memory) {
+    this.memory = memory;
+  }
 
   public write(inM: Word, instruction: Word, reset: Binary): [Word, Binary, Binary15, Binary15] {
     // 1000 1000 1000 1000
