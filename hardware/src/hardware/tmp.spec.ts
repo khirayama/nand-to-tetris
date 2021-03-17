@@ -1,6 +1,9 @@
 import { Memory } from './Memory';
 import { CPU } from './CPU';
 import { zero, b, b2s } from './helpers';
+import { inc16 } from './inc16';
+import { RAM16K } from './RAM16K';
+import { Binary, Binary15, Binary16, Word } from './types';
 
 const samples = {
   rect: [
