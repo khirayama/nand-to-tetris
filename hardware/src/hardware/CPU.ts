@@ -6,10 +6,9 @@ import { alu } from './alu';
 import { mux16 } from './mux16';
 import { PC } from './PC';
 import { Register } from './Register';
+import { zero } from './helpers';
 
 export class CPU {
-  public debug: any;
-
   private aregister: Register = new Register();
 
   private dregister: Register = new Register();
@@ -17,7 +16,6 @@ export class CPU {
   private pc: PC = new PC();
 
   public write(inM: Word, instruction: Word, reset: Binary): [Word, Binary, Binary15, Binary15] {
-    // 1000 1000 1000 1000
     const writeM = and(instruction[12], instruction[0]);
 
     const noti15 = not(instruction[0]);
@@ -45,7 +43,6 @@ export class CPU {
 
     const loadD = and(instruction[11], instruction[0]);
     this.dregister.write(aluout, loadD);
-    const dout = this.dregister.read();
 
     mux0out = mux16(instruction, aluout, instruction[0]);
 
@@ -63,42 +60,6 @@ export class CPU {
 
     const addressM = aout.concat().slice(1, 16) as Binary15;
 
-    this.debug = {
-      inputPins: {
-        inM,
-        instruction,
-        reset,
-      },
-      internalPins: {
-        loadD,
-        noti15,
-        loadA,
-        aluout,
-        mux0out,
-        aout,
-        loadPC,
-        mux1out,
-        dout,
-        zr,
-        ng,
-        notzr,
-        notng,
-        w1,
-        w2,
-        w3,
-        w4,
-        w5,
-        w6,
-      },
-      outputPins: {
-        outM,
-        writeM,
-        addressM,
-        pc,
-      },
-      aregister: this.aregister.read(),
-      dregister: this.dregister.read(),
-    };
     return [outM, writeM, addressM, pc];
   }
 
@@ -106,35 +67,17 @@ export class CPU {
     return [this.aregister.read(), this.dregister.read()];
   }
 
-  public display(): void {
-    console.log(`*** Input pins ***
-inM[16]        : ${this.debug.inputPins.inM.join('')}
-instruction[16]: ${this.debug.inputPins.instruction.join('')}
-reset          : ${this.debug.inputPins.reset}`);
-    console.log(`*** Internal pins ***
-loadD      : ${this.debug.internalPins.loadD}
-noti15     : ${this.debug.internalPins.noti15}
-loadA      : ${this.debug.internalPins.loadA}
-aluout[16] : ${this.debug.internalPins.aluout.join('')}
-mux0out[16]: ${this.debug.internalPins.mux0out.join('')}
-aout[16]   : ${this.debug.internalPins.aout.join('')}
-loadPC     : ${this.debug.internalPins.loadPC}
-mux1out[16]: ${this.debug.internalPins.mux1out.join('')}
-dout[16]   : ${this.debug.internalPins.dout.join('')}
-zr         : ${this.debug.internalPins.zr}
-ng         : ${this.debug.internalPins.ng}
-notzr      : ${this.debug.internalPins.notzr}
-notng      : ${this.debug.internalPins.notng}
-w1         : ${this.debug.internalPins.w1}
-w2         : ${this.debug.internalPins.w2}
-w3         : ${this.debug.internalPins.w3}
-w4         : ${this.debug.internalPins.w4}
-w5         : ${this.debug.internalPins.w5}
-w6         : ${this.debug.internalPins.w6}`);
-    console.log(`*** Output pins ***
-outM[16]    : ${this.debug.outputPins.outM.join('')}
-writeM      : ${this.debug.outputPins.writeM}
-addressM[15]: ${this.debug.outputPins.addressM.join('')}
-pc[15]      : ${this.debug.outputPins.pc.join('')}`);
+  public reset(): void {
+    this.pc.write(zero(), 1, 1, 1);
+    this.aregister.write(zero(), 1);
+    this.dregister.write(zero(), 1);
+  }
+
+  public status() {
+    return {
+      aregister: this.aregister.read(),
+      dregister: this.dregister.read(),
+      pc: this.pc.read(),
+    };
   }
 }
