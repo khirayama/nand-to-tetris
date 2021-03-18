@@ -10,17 +10,18 @@ export class Memory {
 
   private screen: Screen = new Screen();
 
+  // TODO Keyboard
+
   public write(input: Binary16, load: Binary, address: Binary15) {
     const [loadram0, loadram1, loadscreen] = dmux4way(load, [address[0], address[1]]);
     const loadram = or(loadram0, loadram1);
     const ramout = this.ram.write(input, loadram, address);
-    this.screen.write(input, loadscreen, address.slice(2) as Binary13);
-    // TODO Keyboard
+    const scrout = this.screen.write(input, loadscreen, address.slice(2) as Binary13);
     return mux4way16(
       ramout,
       ramout,
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      scrout,
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] /* keyboardout */,
       [address[0], address[1]],
     );
   }
