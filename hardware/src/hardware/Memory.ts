@@ -30,4 +30,8 @@ export class Memory {
     const tmp = this.ram.read(address);
     return tmp;
   }
+
+  public display() {
+    return this.screen.display();
+  }
 }
