@@ -37,6 +37,8 @@ export function Controller(props: {
             <option value="add">Add</option>
             <option value="max">Max</option>
             <option value="rect">Rect</option>
+            <option value="fill">Fill</option>
+            <option value="mult">Mult</option>
           </select>
         </div>
       </div>
