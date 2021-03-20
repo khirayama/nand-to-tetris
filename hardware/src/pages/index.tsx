@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from 'styled-jsx/css';
+import Head from 'next/head';
 
 import { CPU } from '../hardware/CPU';
 import { b, zero } from '../hardware/helpers';
@@ -91,6 +92,10 @@ export default function IndexPage() {
 
   return (
     <>
+      <Head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+      </Head>
       <style jsx global>
         {resetStyles}
       </style>

@@ -93,14 +93,16 @@ export const resetStyles = css.global`
 
   input,
   textarea,
-  button {
+  button,
+  select {
     font-size: inherit;
     color: inherit;
+    background: transparent;
   }
 
   /* Applicattion */
   html {
-    font-family: sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 18px;
     text-align: justify;
     color: #222222;
