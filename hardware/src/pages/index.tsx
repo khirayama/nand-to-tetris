@@ -17,6 +17,7 @@ import { ScreenViewer } from '../components/ScreenViewer';
 import { ROMViewer } from '../components/ROMViewer';
 import { MemoryViewer } from '../components/MemoryViewer';
 import { CPUViewer } from '../components/CPUViewer';
+import { ALUViewer } from '../components/ALUViewer';
 
 const styles = css`
   .left-column,
@@ -27,6 +28,10 @@ const styles = css`
   }
 
   .cpu-viewer-container {
+    margin: 12px 0;
+  }
+
+  .alu-viewer-container {
     margin: 12px 0;
   }
 
@@ -124,6 +129,10 @@ export default function IndexPage() {
 
         <section className="cpu-viewer-container">
           <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
+        </section>
+
+        <section className="alu-viewer-container">
+          <ALUViewer dInput={cpuStatus.dregister} maInput={cpuStatus.aregister} output={cpuStatus.dregister} />
         </section>
 
         <section className="screen-viewer-container">
