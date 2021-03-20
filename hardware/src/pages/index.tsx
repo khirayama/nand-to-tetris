@@ -19,11 +19,27 @@ import { MemoryViewer } from '../components/MemoryViewer';
 import { CPUViewer } from '../components/CPUViewer';
 
 const styles = css`
-  .container {
-    display: flex;
+  .left-column,
+  .right-column {
+    display: inline-block;
+    vertical-align: top;
+    padding: 12px;
   }
-  .container section {
-    flex: 1;
+
+  .cpu-viewer-container {
+    margin: 12px 0;
+  }
+
+  .rom-viewer-container {
+    display: inline-block;
+  }
+
+  .memory-viewer-container {
+    display: inline-block;
+  }
+
+  .rom-viewer-container + .memory-viewer-container {
+    margin-left: 12px;
   }
 `;
 
@@ -33,6 +49,8 @@ const cpu = new CPU();
 const logger = new Logger(rom, memory);
 
 function writeInstructionsToROM(instructionStrings: string[]) {
+  logger.resetActiveROMAddress();
+
   let address = b<Word>('0000 0000 0000 0000');
 
   for (let i = 0; i < instructionStrings.length; i += 1) {
@@ -43,7 +61,7 @@ function writeInstructionsToROM(instructionStrings: string[]) {
 }
 
 writeInstructionsToROM(samples.add);
-logger.writeMemory(b('0000 0000 0000 1011'), 1, b('000 0000 0000 0000'));
+logger.writeMemory(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
 logger.writeMemory(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
 export default function IndexPage() {
@@ -100,26 +118,27 @@ export default function IndexPage() {
         {resetStyles}
       </style>
       <style jsx>{styles}</style>
-      <Controller onNextClick={onNextClick} onResetClick={onResetClick} />
-      <div>
-        <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
-      </div>
 
-      <div className="container">
-        <section>
-          <select onChange={onSelectChange}>
-            <option value="add">Add</option>
-            <option value="max">Max</option>
-            <option value="rect">Rect</option>
-          </select>
-          <ROMViewer rom={rom} addresses={displayedROMAddresses} />
+      <div className="left-column">
+        <Controller onNextClick={onNextClick} onResetClick={onResetClick} onSelectChange={onSelectChange} />
+
+        <section className="cpu-viewer-container">
+          <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
         </section>
 
-        <section>
-          <MemoryViewer memory={memory} addresses={displayedMemoryAddresses} />
+        <section className="screen-viewer-container">
+          <ScreenViewer />
         </section>
       </div>
-      <ScreenViewer />
+
+      <div className="right-column">
+        <section className="rom-viewer-container">
+          <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} onSelectChange={onSelectChange} />
+        </section>
+        <section className="memory-viewer-container">
+          <MemoryViewer memory={memory} aregister={cpuStatus.aregister} addresses={displayedMemoryAddresses} />
+        </section>
+      </div>
     </>
   );
 }

@@ -5,17 +5,53 @@ import { b2s } from '../hardware/helpers';
 import { Word } from '../hardware/types';
 
 const styles = css`
-  canvas {
-    border: solid 2px #000;
+  .table-container {
+    display: inline-block;
+    border: solid 2px #333;
+    max-height: 100%;
+    overflow: scroll;
+    vertical-align: top;
+  }
+
+  .table-container table tbody tr + tr {
+    border-top: solid 2px #333;
+  }
+
+  .table-container table tbody th {
+    min-width: 2rem;
+    padding: 2px 4px;
+    text-align: right;
+    border-right: solid 2px #333;
+  }
+
+  .table-container table tbody td {
+    padding: 2px 4px;
+    text-align: right;
   }
 `;
 
 export function CPUViewer(props: { pc: Word; aregister: Word; dregister: Word }) {
   return (
-    <div>
-      <div>PC {b2s(props.pc)}</div>
-      <div>A {b2s(props.aregister)}</div>
-      <div>D {b2s(props.dregister)}</div>
-    </div>
+    <>
+      <style jsx>{styles}</style>
+      <div className="table-container">
+        <table>
+          <tbody>
+            <tr>
+              <th>PC</th>
+              <td>{b2s(props.pc)}</td>
+            </tr>
+            <tr>
+              <th>A</th>
+              <td>{b2s(props.aregister)}</td>
+            </tr>
+            <tr>
+              <th>D</th>
+              <td>{b2s(props.dregister)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
