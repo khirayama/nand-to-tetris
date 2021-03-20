@@ -1,4 +1,4 @@
-import { Binary, Binary13, Binary15, Binary16 } from './types';
+import { Binary, Binary13, Binary15, Word } from './types';
 import { dmux4way } from './dmux4way';
 import { or } from './or';
 import { RAM16K } from './RAM16K';
@@ -12,7 +12,7 @@ export class Memory {
 
   // TODO Keyboard
 
-  public write(input: Binary16, load: Binary, address: Binary15) {
+  public write(input: Word, load: Binary, address: Binary15) {
     const [loadram0, loadram1, loadscreen] = dmux4way(load, [address[0], address[1]]);
     const loadram = or(loadram0, loadram1);
     const ramout = this.ram.write(input, loadram, address);
@@ -27,11 +27,12 @@ export class Memory {
   }
 
   public read(address: Binary15) {
-    const tmp = this.ram.read(address);
-    return tmp;
-  }
-
-  public display() {
-    return this.screen.display();
+    return mux4way16(
+      this.ram.read(address),
+      this.ram.read(address),
+      this.screen.read(address.slice(2) as Binary13),
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] /* keyboardout */,
+      [address[0], address[1]],
+    );
   }
 }
