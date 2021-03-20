@@ -10,7 +10,7 @@ import { RAM16K } from '../hardware/RAM16K';
 import { Binary15, Word } from '../hardware/types';
 import { samples } from '../samples';
 
-import { Logger } from '../helpers/Logger';
+import { RAMProxy } from '../helpers/RAMProxy';
 import { resetStyles } from '../components/resetStyles';
 import { Controller } from '../components/Controller';
 import { ScreenViewer } from '../components/ScreenViewer';
@@ -43,27 +43,26 @@ const styles = css`
   }
 `;
 
-const rom = new RAM16K();
-const memory = new Memory();
+const rom = new RAMProxy(new RAM16K());
+const memory = new RAMProxy(new Memory());
 const cpu = new CPU();
-const logger = new Logger(rom, memory);
 
 function writeInstructionsToROM(instructionStrings: string[]) {
-  logger.resetActiveROMAddress();
+  rom.clear();
 
   let address = b<Word>('0000 0000 0000 0000');
 
   for (let i = 0; i < instructionStrings.length; i += 1) {
     const instruction = b<Word>(instructionStrings[i]);
-    logger.writeROM(instruction, 1, address.slice(1) as Binary15);
+    rom.write(instruction, 1, address.slice(1) as Binary15);
     address = inc16(address);
   }
 }
 
 writeInstructionsToROM(samples.add);
-// logger.writeMemory(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
-logger.writeMemory(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0000'));
-logger.writeMemory(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
+// memory.write(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
+memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0000'));
+memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
 export default function IndexPage() {
   const cs = cpu.status();
@@ -71,10 +70,8 @@ export default function IndexPage() {
   let inM = memory.read(cs.aregister.slice(1) as Binary15);
 
   const [cpuStatus, setCpuStatus] = React.useState(cs);
-  const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(logger.activeROMAddresses);
-  const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(
-    logger.activeMemoryAddresses,
-  );
+  const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
+  const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(memory.activeAddresses());
 
   function onNextClick() {
     let cs = cpu.status();
@@ -84,8 +81,8 @@ export default function IndexPage() {
     const load = res[1];
     const address = res[2];
 
-    logger.writeMemory(input, load, address);
-    setDisplayedMemoryAddresses(logger.activeMemoryAddresses);
+    memory.write(input, load, address);
+    setDisplayedMemoryAddresses(memory.activeAddresses());
 
     cs = cpu.status();
 
@@ -96,7 +93,7 @@ export default function IndexPage() {
   function onSelectChange(event: React.FormEvent<HTMLSelectElement>) {
     const value = event.currentTarget.value;
     writeInstructionsToROM(samples[value]);
-    setDisplayedROMAddresses(logger.activeROMAddresses);
+    setDisplayedROMAddresses(rom.activeAddresses());
 
     cpu.reset();
     setCpuStatus(cpu.status());
