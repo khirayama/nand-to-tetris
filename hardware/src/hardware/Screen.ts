@@ -8,9 +8,6 @@ export class Screen {
   private rams: [RAM4K, RAM4K] = [new RAM4K(), new RAM4K()];
 
   public write(input: Word, load: Binary, address: Binary13): Word {
-    if (load) {
-      console.log(`Screen write - input: ${b2s(input)}, address: ${b2s(address)}`);
-    }
     const bits = dmux(load, address[0]);
     const addrss = address.slice(1) as Binary12;
     this.rams[0].write(input, bits[0], addrss);
