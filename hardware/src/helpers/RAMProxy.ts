@@ -14,18 +14,20 @@ export class RAMProxy {
 
   public write(input: Word, load: Binary, address: Binary15) {
     if (load) {
-      this.caches[address.join('')] = input.join('');
+      this.caches[address.join('')] = input;
     }
     return this.ram.write(input, load, address);
   }
 
   public read(address: Binary15) {
     const key = address.join('');
-    return this.caches[key] ? b(this.caches[key]) : zero();
+    return this.caches[key] ? this.caches[key] : zero();
   }
 
   public activeAddresses() {
-    return Object.keys(this.caches).map((addrss) => b(addrss));
+    return Object.keys(this.caches)
+      .sort()
+      .map((addrss) => b(addrss));
   }
 
   public clear() {
