@@ -1,7 +1,6 @@
 import { Binary, Binary3, Binary8, Binary12, Binary15, Word, Word8, Word4K, Word16K, Binary14 } from './types';
 import { dmux8way } from './dmux8way';
 import { mux8way16 } from './mux8way16';
-import { mux4way16 } from './mux4way16';
 import { RAM4K } from './RAM4K';
 
 export class RAM16K {
