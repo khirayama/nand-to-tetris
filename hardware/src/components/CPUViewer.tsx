@@ -13,6 +13,14 @@ const styles = css`
     vertical-align: top;
   }
 
+  .table-container table thead tr {
+    border-bottom: solid 2px #333;
+  }
+
+  .table-container table thead th {
+    padding: 2px 4px;
+  }
+
   .table-container table tbody tr + tr {
     border-top: solid 2px #333;
   }
@@ -36,6 +44,11 @@ export function CPUViewer(props: { pc: Word; aregister: Word; dregister: Word })
       <style jsx>{styles}</style>
       <div className="table-container">
         <table>
+          <thead>
+            <tr>
+              <th colSpan={2}>CPU</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <th>PC</th>
