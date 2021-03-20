@@ -24,6 +24,16 @@ export class RAM8 {
   }
 
   public read(address: Binary3): Word {
-    return mux8way16(...(this.registers.map((register) => register.read()) as Word8), address);
+    return mux8way16(
+      this.registers[0].read(),
+      this.registers[1].read(),
+      this.registers[2].read(),
+      this.registers[3].read(),
+      this.registers[4].read(),
+      this.registers[5].read(),
+      this.registers[6].read(),
+      this.registers[7].read(),
+      address,
+    );
   }
 }

@@ -24,10 +24,17 @@ export class RAM64 {
   }
 
   public read(address: Binary6): Word {
-    return mux8way16(...(this.rams.map((ram) => ram.read([address[3], address[4], address[5]])) as Word8), [
-      address[0],
-      address[1],
-      address[2],
-    ]);
+    const addrss: Binary3 = [address[3], address[4], address[5]];
+    return mux8way16(
+      this.rams[0].read(addrss),
+      this.rams[1].read(addrss),
+      this.rams[2].read(addrss),
+      this.rams[3].read(addrss),
+      this.rams[4].read(addrss),
+      this.rams[5].read(addrss),
+      this.rams[6].read(addrss),
+      this.rams[7].read(addrss),
+      [address[0], address[1], address[2]],
+    );
   }
 }

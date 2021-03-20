@@ -128,7 +128,7 @@ export default function IndexPage() {
         </section>
 
         <section className="screen-viewer-container">
-          <ScreenViewer />
+          <ScreenViewer memory={memory} />
         </section>
       </div>
 

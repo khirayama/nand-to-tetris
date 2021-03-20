@@ -31,6 +31,23 @@ export class Register {
   }
 
   public read(): Word {
-    return this.bits.map((bit) => bit.read()) as Word;
+    return [
+      this.bits[0].read(),
+      this.bits[1].read(),
+      this.bits[2].read(),
+      this.bits[3].read(),
+      this.bits[4].read(),
+      this.bits[5].read(),
+      this.bits[6].read(),
+      this.bits[7].read(),
+      this.bits[8].read(),
+      this.bits[9].read(),
+      this.bits[10].read(),
+      this.bits[11].read(),
+      this.bits[12].read(),
+      this.bits[13].read(),
+      this.bits[14].read(),
+      this.bits[15].read(),
+    ];
   }
 }
