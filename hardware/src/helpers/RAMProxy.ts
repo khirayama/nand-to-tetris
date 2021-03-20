@@ -13,7 +13,7 @@ export class RAMProxy {
   }
 
   public write(input: Word, load: Binary, address: Binary15) {
-    if (load) {
+    if (load === 1) {
       this.caches[address.join('')] = input;
     }
     return this.ram.write(input, load, address);
