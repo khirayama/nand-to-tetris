@@ -10,7 +10,7 @@ const styles = css`
   .table-container {
     display: inline-block;
     border: solid 2px #333;
-    max-height: 100%;
+    max-height: 512px;
     overflow: scroll;
     vertical-align: top;
   }
