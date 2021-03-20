@@ -17,7 +17,6 @@ import { ScreenViewer } from '../components/ScreenViewer';
 import { ROMViewer } from '../components/ROMViewer';
 import { MemoryViewer } from '../components/MemoryViewer';
 import { CPUViewer } from '../components/CPUViewer';
-import { ALUViewer } from '../components/ALUViewer';
 
 const styles = css`
   .left-column,
@@ -28,10 +27,6 @@ const styles = css`
   }
 
   .cpu-viewer-container {
-    margin: 12px 0;
-  }
-
-  .alu-viewer-container {
     margin: 12px 0;
   }
 
@@ -66,7 +61,8 @@ function writeInstructionsToROM(instructionStrings: string[]) {
 }
 
 writeInstructionsToROM(samples.add);
-logger.writeMemory(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
+// logger.writeMemory(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
+logger.writeMemory(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0000'));
 logger.writeMemory(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
 export default function IndexPage() {
@@ -129,10 +125,6 @@ export default function IndexPage() {
 
         <section className="cpu-viewer-container">
           <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
-        </section>
-
-        <section className="alu-viewer-container">
-          <ALUViewer dInput={cpuStatus.dregister} maInput={cpuStatus.aregister} output={cpuStatus.dregister} />
         </section>
 
         <section className="screen-viewer-container">

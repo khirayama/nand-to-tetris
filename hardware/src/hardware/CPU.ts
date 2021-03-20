@@ -25,6 +25,7 @@ export class CPU {
     this.aregister.write(mux0out, loadA);
     const aout = this.aregister.read();
     const mux1out = mux16(aout, inM, instruction[3]);
+    this.aregister.write(mux1out, loadA);
 
     const result = alu(
       this.dregister.read(),
@@ -37,6 +38,7 @@ export class CPU {
       instruction[9],
     );
     const aluout = result[0];
+
     const outM = aluout;
     const zr = result[1];
     const ng = result[2];

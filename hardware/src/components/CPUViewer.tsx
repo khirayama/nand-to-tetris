@@ -28,7 +28,6 @@ const styles = css`
   .table-container table tbody th {
     min-width: 2rem;
     padding: 2px 4px;
-    text-align: right;
     border-right: solid 2px #333;
   }
 
