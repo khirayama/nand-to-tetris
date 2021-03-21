@@ -67,11 +67,23 @@ memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 export default function IndexPage() {
   const cs = cpu.status();
 
-  let inM = memory.read(cs.aregister.slice(1) as Binary15);
+  let inM: Word = memory.read(cs.aregister.slice(1) as Binary15);
 
   const [cpuStatus, setCpuStatus] = React.useState(cs);
   const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
   const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(memory.activeAddresses());
+
+  React.useEffect(() => {
+    window.document.addEventListener('keydown', (event) => {
+      const keyCode = event.keyCode;
+      const input = b(('0000000000000000' + keyCode.toString(2)).slice(-16));
+      memory.write(input, 1, b('110 0000 0000 0000'));
+    });
+
+    window.document.addEventListener('keyup', () => {
+      memory.write(b('0000 0000 0000 0000'), 1, b('110 0000 0000 0000'));
+    });
+  }, []);
 
   function onNextClick() {
     let cs = cpu.status();
