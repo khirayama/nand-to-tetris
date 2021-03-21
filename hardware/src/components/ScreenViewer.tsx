@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { css } from 'styled-jsx/css';
 
-import { Binary15 } from '../hardware/types';
+import { Binary15, Word } from '../hardware/types';
 import { inc16 } from '../hardware/inc16';
-import { b, zero, b2s } from '../hardware/helpers';
+import { b } from '../hardware/helpers';
+import { Memory } from '../hardware/Memory';
 
 const styles = css`
   canvas {
@@ -23,7 +24,7 @@ export function ScreenViewer(props: { memory: Memory }) {
       const ctx = ref.current.getContext('2d');
       if (ctx) {
         const result = [];
-        let current = b('0100 0000 0000 0000');
+        let current = b<Word>('0100 0000 0000 0000');
         const limit = Math.pow(2, 13);
         for (let i = 0; i < limit; i += 1) {
           result.push(props.memory.read(current.slice(1) as Binary15));
