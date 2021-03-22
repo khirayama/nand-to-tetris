@@ -22,6 +22,8 @@ const styles = css`
 
 export function Controller(props: {
   onNextClick: (event?: React.MouseEvent) => void;
+  onStartClick: (event?: React.MouseEvent) => void;
+  onStopClick: (event?: React.MouseEvent) => void;
   onResetClick: (event?: React.MouseEvent) => void;
   onSelectChange: (event: React.FormEvent<HTMLSelectElement>) => void;
 }) {
@@ -31,6 +33,8 @@ export function Controller(props: {
       <div className="container">
         <button onClick={props.onNextClick}>Next Step</button>
         <button onClick={props.onResetClick}>Reset</button>
+        <button onClick={props.onStartClick}>Start</button>
+        <button onClick={props.onStopClick}>Stop</button>
         <div>
           <span>LOAD SAMPLE</span>
           <select onChange={props.onSelectChange}>

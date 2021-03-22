@@ -64,6 +64,8 @@ writeInstructionsToROM(samples.add);
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0000'));
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
+let timerId: number | null = null;
+
 export default function IndexPage() {
   const cs = cpu.status();
 
@@ -73,19 +75,24 @@ export default function IndexPage() {
   const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
   const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(memory.activeAddresses());
 
+  let keyCode: number | null = null;
+
   React.useEffect(() => {
     window.document.addEventListener('keydown', (event) => {
-      const keyCode = event.keyCode;
-      const input = b(('0000000000000000' + keyCode.toString(2)).slice(-16));
-      memory.write(input, 1, b('110 0000 0000 0000'));
+      if (keyCode === null) {
+        keyCode = event.key.charCodeAt(0);
+        const input: Word = b(('0000000000000000' + keyCode.toString(2)).slice(-16));
+        memory.write(input, 1, b('110 0000 0000 0000'));
+      }
     });
 
     window.document.addEventListener('keyup', () => {
+      keyCode = null;
       memory.write(b('0000 0000 0000 0000'), 1, b('110 0000 0000 0000'));
     });
   }, []);
 
-  function onNextClick() {
+  function next() {
     let cs = cpu.status();
     let instruction = rom.read(cs.pc.slice(1) as Binary15);
     let res = cpu.write(inM, instruction, 0);
@@ -100,6 +107,23 @@ export default function IndexPage() {
 
     inM = memory.read(address);
     setCpuStatus(cs);
+  }
+
+  function onNextClick() {
+    next();
+  }
+
+  function onStartClick() {
+    if (timerId === null) {
+      timerId = window.setInterval(next, 300);
+    }
+  }
+
+  function onStopClick() {
+    if (timerId !== null) {
+      window.clearInterval(timerId);
+      timerId = null;
+    }
   }
 
   function onSelectChange(event: React.FormEvent<HTMLSelectElement>) {
@@ -130,7 +154,13 @@ export default function IndexPage() {
       <style jsx>{styles}</style>
 
       <div className="left-column">
-        <Controller onNextClick={onNextClick} onResetClick={onResetClick} onSelectChange={onSelectChange} />
+        <Controller
+          onNextClick={onNextClick}
+          onResetClick={onResetClick}
+          onSelectChange={onSelectChange}
+          onStartClick={onStartClick}
+          onStopClick={onStopClick}
+        />
 
         <section className="cpu-viewer-container">
           <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
