@@ -1,7 +1,6 @@
 import { Binary, Binary16, Binary13, Binary12, Word } from './types';
 import { RAM4K } from './RAM4K';
 import { dmux } from './dmux';
-import { b, b2s, zero } from './helpers';
 import { mux16 } from './mux16';
 
 export class Screen {

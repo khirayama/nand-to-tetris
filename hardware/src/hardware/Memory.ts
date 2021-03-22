@@ -20,6 +20,7 @@ export class Memory {
     const scrout = this.screen.write(input, loadscreen, address.slice(2) as Binary13);
     const kbout = this.keyboard.write(input, loadkb);
     return mux4way16(ramout, ramout, scrout, kbout, [address[0], address[1]]);
+    // return this.read(address);
   }
 
   public read(address: Binary15) {

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { css } from 'styled-jsx/css';
 
-import { Binary15, Word } from '../hardware/types';
+import { Word } from '../hardware/types';
 import { inc16 } from '../hardware/inc16';
-import { b } from '../hardware/helpers';
 import { Memory } from '../hardware/Memory';
 
 const styles = css`
@@ -14,20 +13,38 @@ const styles = css`
   }
 `;
 
+const width = 512;
+const res = 4;
+const limit = Math.pow(2, 13);
+
 export function ScreenViewer(props: { memory: Memory }) {
   const ref = React.createRef<HTMLCanvasElement>();
-  const width = 512;
-  const res = 4;
 
   React.useEffect(() => {
     if (ref.current) {
       const ctx = ref.current.getContext('2d');
       if (ctx) {
         const result = [];
-        let current = b<Word>('0100 0000 0000 0000');
-        const limit = Math.pow(2, 13);
+        let current: Word = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         for (let i = 0; i < limit; i += 1) {
-          result.push(props.memory.read(current.slice(1) as Binary15));
+          const output = props.memory.read([
+            current[1],
+            current[2],
+            current[3],
+            current[4],
+            current[5],
+            current[6],
+            current[7],
+            current[8],
+            current[9],
+            current[10],
+            current[11],
+            current[12],
+            current[13],
+            current[14],
+            current[15],
+          ]);
+          result.push(output);
           current = inc16(current);
         }
         const pixels = result.flat(2);

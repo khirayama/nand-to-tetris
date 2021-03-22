@@ -1,5 +1,4 @@
 import { Binary, Binary8, Word } from './types';
-import { b } from './helpers';
 import { mux16 } from './mux16';
 import { not16 } from './not16';
 import { and16 } from './and16';
@@ -18,7 +17,8 @@ export function alu(
   f: Binary,
   no: Binary,
 ): [Word, /* zr */ Binary, /* ng */ Binary] {
-  const z: Word = b<Word>('0000 0000 0000 0000');
+  // const z: Word = b<Word>('0000 0000 0000 0000');
+  const z: Word = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   const w1 = mux16(x, z, zx);
   const w2 = mux16(y, z, zy);
