@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { css } from 'styled-jsx/css';
 
 import { RAM16K } from '../hardware/RAM16K';
-import { b, b2s, zero } from '../hardware/helpers';
+import { b2s } from '../hardware/helpers';
 import { Binary15, Word } from '../hardware/types';
 
 const styles = css`
