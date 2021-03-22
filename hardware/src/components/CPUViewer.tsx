@@ -26,7 +26,7 @@ const styles = css`
   }
 
   .table-container table tbody th {
-    min-width: 2rem;
+    min-width: 4rem;
     padding: 2px 4px;
     border-right: solid 2px #333;
   }
