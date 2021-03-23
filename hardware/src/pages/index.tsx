@@ -24,18 +24,18 @@ const styles = css`
     display: inline-block;
     vertical-align: top;
     padding: 12px;
+    height: 100%;
   }
 
   .cpu-viewer-container {
     margin: 12px 0;
   }
 
-  .rom-viewer-container {
-    display: inline-block;
-  }
-
+  .rom-viewer-container,
   .memory-viewer-container {
     display: inline-block;
+    height: 100%;
+    vertical-align: top;
   }
 
   .rom-viewer-container + .memory-viewer-container {

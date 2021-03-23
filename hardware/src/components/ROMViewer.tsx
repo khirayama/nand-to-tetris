@@ -7,24 +7,19 @@ import { b2s } from '../hardware/helpers';
 import { Binary15, Word } from '../hardware/types';
 
 const styles = css`
-  .table-container {
-    display: inline-block;
-    border: solid 2px #333;
-    max-height: 512px;
+  .rom-viewer {
+    border: solid 2px #000;
+    max-height: 100%;
     overflow: scroll;
-    vertical-align: top;
   }
 
-  .table-container table thead tr {
-    border-bottom: solid 2px #333;
-  }
-
-  .table-container table thead th {
+  .rom-viewer h3 {
+    position: sticky;
+    top: 0;
+    border-bottom: solid 2px #000;
+    background: #fff;
     padding: 2px 4px;
-  }
-
-  .table-container table thead td {
-    padding: 2px 4px;
+    font-size: 1rem;
   }
 
   .table-container table tbody th {
@@ -48,26 +43,24 @@ export function ROMViewer(props: { rom: RAM16K; pc: Word; addresses: Binary15[] 
   return (
     <>
       <style jsx>{styles}</style>
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th colSpan={2}>ROM</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.addresses.map((address) => {
-              const addressString = address.join('');
-              const isCurrent = addressString === props.pc.slice(1).join('');
-              return (
-                <tr key={`rom-${addressString}`} className={classnames({ 'is-current': isCurrent })}>
-                  <th>{parseInt(addressString, 2)}</th>
-                  <td>{b2s(props.rom.read(address))}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="rom-viewer">
+        <h3>ROM</h3>
+        <div className="table-container">
+          <table>
+            <tbody>
+              {props.addresses.map((address) => {
+                const addressString = address.join('');
+                const isCurrent = addressString === props.pc.slice(1).join('');
+                return (
+                  <tr key={`rom-${addressString}`} className={classnames({ 'is-current': isCurrent })}>
+                    <th>{parseInt(addressString, 2)}</th>
+                    <td>{b2s(props.rom.read(address))}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

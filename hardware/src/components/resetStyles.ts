@@ -107,4 +107,10 @@ export const resetStyles = css.global`
     text-align: justify;
     color: #222222;
   }
+
+  html,
+  body,
+  body > div {
+    height: 100%;
+  }
 `;
