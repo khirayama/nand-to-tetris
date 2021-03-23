@@ -60,8 +60,7 @@ function writeInstructionsToROM(instructionStrings: string[]) {
 }
 
 writeInstructionsToROM(samples.add);
-// memory.write(b('0000 0000 0000 0001'), 1, b('000 0000 0000 0000'));
-memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0000'));
+memory.write(b('0000 0000 0000 1011'), 1, b('000 0000 0000 0000'));
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
 let timerId: number | null = null;
