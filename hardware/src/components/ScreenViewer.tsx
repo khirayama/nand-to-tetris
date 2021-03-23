@@ -5,17 +5,17 @@ import { Word } from '../hardware/types';
 import { inc16 } from '../hardware/inc16';
 import { Memory } from '../hardware/Memory';
 
-const styles = css`
-  canvas {
-    width: 512px;
-    height: 256px;
-    border: solid 2px #000;
-  }
-`;
-
 const width = 512;
 const res = 4;
 const limit = Math.pow(2, 13);
+
+const styles = css`
+  canvas {
+    width: ${width}px;
+    height: ${width / 2}px;
+    border: solid 2px #000;
+  }
+`;
 
 export function ScreenViewer(props: { memory: Memory }) {
   const ref = React.createRef<HTMLCanvasElement>();
