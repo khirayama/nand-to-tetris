@@ -21,13 +21,23 @@ export class Register {
     new Bit(),
   ];
 
-  public write(input: Word, load: Binary): Word {
-    const tmp = this.read();
-    for (let i = 0; i < this.bits.length; i += 1) {
-      const bit: Bit = this.bits[i];
-      bit.write(input[i], load);
-    }
-    return tmp;
+  public write(input: Word, load: Binary): void {
+    this.bits[0].write(input[0], load);
+    this.bits[1].write(input[1], load);
+    this.bits[2].write(input[2], load);
+    this.bits[3].write(input[3], load);
+    this.bits[4].write(input[4], load);
+    this.bits[5].write(input[5], load);
+    this.bits[6].write(input[6], load);
+    this.bits[7].write(input[7], load);
+    this.bits[8].write(input[8], load);
+    this.bits[9].write(input[9], load);
+    this.bits[10].write(input[10], load);
+    this.bits[11].write(input[11], load);
+    this.bits[12].write(input[12], load);
+    this.bits[13].write(input[13], load);
+    this.bits[14].write(input[14], load);
+    this.bits[15].write(input[15], load);
   }
 
   public read(): Word {

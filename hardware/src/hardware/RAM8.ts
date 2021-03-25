@@ -15,12 +15,16 @@ export class RAM8 {
     new Register(),
   ];
 
-  public write(input: Word, load: Binary, address: Binary3): Word {
+  public write(input: Word, load: Binary, address: Binary3): void {
     const res: Binary8 = dmux8way(load, address);
-    const tmp: Word8 = this.registers.map((register: Register, i: number) => {
-      return register.write(input, res[i]);
-    }) as Word8;
-    return mux8way16(...tmp, address);
+    this.registers[0].write(input, res[0]);
+    this.registers[1].write(input, res[1]);
+    this.registers[2].write(input, res[2]);
+    this.registers[3].write(input, res[3]);
+    this.registers[4].write(input, res[4]);
+    this.registers[5].write(input, res[5]);
+    this.registers[6].write(input, res[6]);
+    this.registers[7].write(input, res[7]);
   }
 
   public read(address: Binary3): Word {

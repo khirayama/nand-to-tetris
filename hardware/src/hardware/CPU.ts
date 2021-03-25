@@ -58,7 +58,8 @@ export class CPU {
     const w6 = or(w4, w5);
     const loadPC = and(instruction[0], w6);
     this.pc.write(aout, 1, loadPC, reset);
-    const pc: Binary15 = this.pc.read().concat().slice(1, 16) as Binary15;
+    // const pc: Binary15 = this.pc.read().concat().slice(1, 16) as Binary15;
+    const pc: Binary15 = this.pc.read().slice(1, 16) as Binary15;
 
     const addressM = aout.concat().slice(1, 16) as Binary15;
 

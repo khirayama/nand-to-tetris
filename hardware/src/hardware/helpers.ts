@@ -17,11 +17,11 @@ export function b<T>(str: string): T {
 
 export function b2s(b: Binary[]): string {
   let result = '';
-  for (let i = 0; i < b.length; i += 1) {
-    if (i % 4 === 0 && i !== 0) {
-      result += ' ';
+  for (let i = b.length - 1; 0 <= i; i -= 1) {
+    if ((b.length - 1 - i) % 4 === 0 && i !== b.length - 1) {
+      result = ' ' + result;
     }
-    result += String(b[i]);
+    result = String(b[i]) + result;
   }
 
   return result;

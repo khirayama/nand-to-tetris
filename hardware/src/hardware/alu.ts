@@ -17,8 +17,7 @@ export function alu(
   f: Binary,
   no: Binary,
 ): [Word, /* zr */ Binary, /* ng */ Binary] {
-  // const z: Word = b<Word>('0000 0000 0000 0000');
-  const z: Word = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const z: Word = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; /* 0000 0000 0000 0000 */
 
   const w1 = mux16(x, z, zx);
   const w2 = mux16(y, z, zy);
@@ -35,8 +34,10 @@ export function alu(
   const notw5 = not16(w5);
   const out = mux16(w5, notw5, no);
 
-  const out0to7 = out.concat().splice(8, 8) as Binary8;
-  const out8to15 = out.concat().splice(0, 8) as Binary8;
+  // const out0to7 = out.concat().splice(8, 8) as Binary8;
+  // const out8to15 = out.concat().splice(0, 8) as Binary8;
+  const out0to7 = out.slice(8, 16) as Binary8;
+  const out8to15 = out.slice(0, 8) as Binary8;
   const ng = out[0];
 
   const or0to7 = or8way(out0to7);

@@ -15,12 +15,17 @@ export class RAM4K {
     new RAM512(),
   ];
 
-  public write(input: Word, load: Binary, address: Binary12): Word {
-    const res: Binary8 = dmux8way(load, address.concat().splice(0, 3) as Binary3);
-    const tmp: Word8 = this.rams.map((ram512: RAM512, i: number) => {
-      return ram512.write(input, res[i], address.concat().splice(3, 9) as Binary9);
-    }) as Word8;
-    return mux8way16(...tmp, address.concat().splice(0, 3) as Binary3);
+  public write(input: Word, load: Binary, address: Binary12): void {
+    const res: Binary8 = dmux8way(load, address.slice(0, 3) as Binary3);
+    const addrss = address.slice(3) as Binary9;
+    this.rams[0].write(input, res[0], addrss);
+    this.rams[1].write(input, res[1], addrss);
+    this.rams[2].write(input, res[2], addrss);
+    this.rams[3].write(input, res[3], addrss);
+    this.rams[4].write(input, res[4], addrss);
+    this.rams[5].write(input, res[5], addrss);
+    this.rams[6].write(input, res[6], addrss);
+    this.rams[7].write(input, res[7], addrss);
   }
 
   public read(address: Binary12): Word {

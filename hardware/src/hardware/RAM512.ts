@@ -15,12 +15,16 @@ export class RAM512 {
     new RAM64(),
   ];
 
-  public write(input: Word, load: Binary, address: Binary9): Word {
-    const res: Binary8 = dmux8way(load, address.concat().splice(0, 3) as Binary3);
-    const tmp: Word8 = this.rams.map((ram64: RAM64, i: number) => {
-      return ram64.write(input, res[i], address.concat().splice(3, 6) as Binary6);
-    }) as Word8;
-    return mux8way16(...tmp, address.concat().splice(0, 3) as Binary3);
+  public write(input: Word, load: Binary, address: Binary9): void {
+    const res: Binary8 = dmux8way(load, address.slice(0, 3) as Binary3);
+    this.rams[0].write(input, res[0], address.slice(3) as Binary6);
+    this.rams[1].write(input, res[1], address.slice(3) as Binary6);
+    this.rams[2].write(input, res[2], address.slice(3) as Binary6);
+    this.rams[3].write(input, res[3], address.slice(3) as Binary6);
+    this.rams[4].write(input, res[4], address.slice(3) as Binary6);
+    this.rams[5].write(input, res[5], address.slice(3) as Binary6);
+    this.rams[6].write(input, res[6], address.slice(3) as Binary6);
+    this.rams[7].write(input, res[7], address.slice(3) as Binary6);
   }
 
   public read(address: Binary9): Word {

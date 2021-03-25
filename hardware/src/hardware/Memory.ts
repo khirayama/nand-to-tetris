@@ -13,13 +13,13 @@ export class Memory {
 
   private keyboard: Register = new Register();
 
-  public write(input: Word, load: Binary, address: Binary15) {
+  public write(input: Word, load: Binary, address: Binary15): void {
     const [loadram0, loadram1, loadscreen, loadkb] = dmux4way(load, [address[0], address[1]]);
     const loadram = or(loadram0, loadram1);
     const ramout = this.ram.write(input, loadram, address);
     const scrout = this.screen.write(input, loadscreen, address.slice(2) as Binary13);
     const kbout = this.keyboard.write(input, loadkb);
-    return mux4way16(ramout, ramout, scrout, kbout, [address[0], address[1]]);
+    // return mux4way16(ramout, ramout, scrout, kbout, [address[0], address[1]]);
     // return this.read(address);
   }
 
