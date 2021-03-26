@@ -5,12 +5,10 @@ import Head from 'next/head';
 import { CPU } from '../hardware/CPU';
 import { b, zero } from '../hardware/helpers';
 import { inc16 } from '../hardware/inc16';
-import { Memory } from '../hardware/Memory';
-import { RAM16K } from '../hardware/RAM16K';
 import { Binary15, Word } from '../hardware/types';
 import { samples } from '../samples';
 
-import { RAMProxy } from '../helpers/RAMProxy';
+import { RAMMock } from '../helpers/RAMMock';
 import { resetStyles } from '../components/resetStyles';
 import { Controller } from '../components/Controller';
 import { ScreenViewer } from '../components/ScreenViewer';
@@ -43,8 +41,8 @@ const styles = css`
   }
 `;
 
-const rom = new RAMProxy(new RAM16K());
-const memory = new RAMProxy(new Memory());
+const rom = new RAMMock(); // new RAM16K()
+const memory = new RAMMock(); // new Memory()
 const cpu = new CPU();
 
 function writeInstructionsToROM(instructionStrings: string[]) {
