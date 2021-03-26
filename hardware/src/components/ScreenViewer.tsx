@@ -55,8 +55,8 @@ export function ScreenViewer(props: { memory: RAMMock }) {
           const c = i % width;
           ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
           ctx.fillRect(c * res, l * res, res, res);
-          ctx.fill();
         }
+        ctx.fill();
       }
     }
   });
