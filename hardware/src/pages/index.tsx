@@ -106,24 +106,25 @@ export default function IndexPage() {
     setCpuStatus(cs);
   }
 
-  function onNextClick() {
+  const onNextClick = React.useCallback(() => {
     next();
-  }
+  }, []);
 
-  function onStartClick() {
+  const onStartClick = React.useCallback(() => {
     if (timerId === null) {
-      timerId = window.setInterval(next, 300);
+      // timerId = window.setInterval(next, 300);
+      timerId = window.setInterval(next, 50);
     }
-  }
+  }, []);
 
-  function onStopClick() {
+  const onStopClick = React.useCallback(() => {
     if (timerId !== null) {
       window.clearInterval(timerId);
       timerId = null;
     }
-  }
+  }, []);
 
-  function onSelectChange(event: React.FormEvent<HTMLSelectElement>) {
+  const onSelectChange = React.useCallback((event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value;
     writeInstructionsToROM(samples[value]);
     setDisplayedROMAddresses(rom.activeAddresses());
@@ -131,13 +132,13 @@ export default function IndexPage() {
     cpu.reset();
     setCpuStatus(cpu.status());
     inM = zero();
-  }
+  }, []);
 
-  function onResetClick() {
+  const onResetClick = React.useCallback(() => {
     cpu.reset();
     setCpuStatus(cpu.status());
     inM = zero();
-  }
+  }, []);
 
   return (
     <>
