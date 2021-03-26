@@ -17,7 +17,7 @@ const styles = css`
   }
 `;
 
-export function ScreenViewer(props: { memory: Memory }) {
+export function ScreenViewer(props: { memory: RAMMock }) {
   const ref = React.createRef<HTMLCanvasElement>();
 
   React.useEffect(() => {

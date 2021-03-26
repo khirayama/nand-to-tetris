@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { css } from 'styled-jsx/css';
 
-import { Memory } from '../hardware/Memory';
+import { RAMMock } from '../hardware/RAMMock';
 import { b2s } from '../hardware/helpers';
 import { Binary15, Word } from '../hardware/types';
 
@@ -39,7 +39,7 @@ const styles = css`
   }
 `;
 
-export function MemoryViewer(props: { memory: Memory; aregister: Word; addresses: Binary15[] }) {
+export function MemoryViewer(props: { memory: RAMMock; aregister: Word; addresses: Binary15[] }) {
   return (
     <>
       <style jsx>{styles}</style>
