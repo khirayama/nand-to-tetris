@@ -15,6 +15,13 @@ const styles = css`
     height: ${width / 2}px;
     border: solid 2px #000;
   }
+
+  h3 {
+    font-size: 1rem;
+    border: solid 2px #000;
+    border-bottom: 0;
+    padding: 2px 4px;
+  }
 `;
 
 export function ScreenViewer(props: { memory: RAMMock }) {
@@ -64,7 +71,10 @@ export function ScreenViewer(props: { memory: RAMMock }) {
   return (
     <>
       <style jsx>{styles}</style>
-      <canvas width={width * res} height={(width / 2) * res} ref={ref} />
+      <div>
+        <h3>SCREEN</h3>
+        <canvas width={width * res} height={(width / 2) * res} ref={ref} />
+      </div>
     </>
   );
 }
