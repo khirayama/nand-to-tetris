@@ -171,8 +171,9 @@ export default function IndexPage() {
 
       <div className="right-column">
         <section className="rom-viewer-container">
-          <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} onSelectChange={onSelectChange} />
+          <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} />
         </section>
+
         <section className="memory-viewer-container">
           <MemoryViewer memory={memory} aregister={cpuStatus.aregister} addresses={displayedMemoryAddresses} />
         </section>
