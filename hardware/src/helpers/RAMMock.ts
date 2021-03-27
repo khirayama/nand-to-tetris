@@ -4,10 +4,13 @@ import { b, zero } from '../hardware/helpers';
 export class RAMMock {
   private caches: { [key: string]: Word } = {};
 
+  public lastAccessAddress: Binary15 | null = null;
+
   public write(input: Word, load: Binary, address: Binary15) {
     if (load === 1) {
       const key = address.join('');
       this.caches[key] = input;
+      this.lastAccessAddress = address;
     }
   }
 
