@@ -13,6 +13,7 @@ const styles = css`
     width: ${width}px;
     height: ${width / 2}px;
     border: solid 2px #000;
+    transform: translateZ(0);
   }
 
   h3 {
@@ -31,9 +32,7 @@ export function ScreenViewer(props: { memory: RAMMock }) {
       const ctx = ref.current.getContext('2d');
       if (ctx) {
         const result = [];
-        // let current: Word = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         let current = 16384; /* 0100 0000 0000 0000 */
-        const s1 = new Date();
         for (let i = 0; i < limit; i += 1) {
           const address = current
             .toString(2)
@@ -43,9 +42,7 @@ export function ScreenViewer(props: { memory: RAMMock }) {
           result.push(output);
           current += 1;
         }
-        const s2 = new Date();
-        const pixels = result.flat(2);
-        const s3 = new Date();
+        const pixels = result.flat(1);
 
         for (let i = 0; i < pixels.length; i += 1) {
           const pixel = pixels[i];
@@ -54,16 +51,31 @@ export function ScreenViewer(props: { memory: RAMMock }) {
           ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
           ctx.fillRect(c * res, l * res, res, res);
         }
-        const s4 = new Date();
         ctx.fill();
-        const s5 = new Date();
+      }
+    }
+  }, []);
 
-        console.log(
-          s2.getTime() - s1.getTime(),
-          s3.getTime() - s2.getTime(),
-          s4.getTime() - s3.getTime(),
-          s5.getTime() - s4.getTime(),
-        );
+  React.useEffect(() => {
+    if (ref.current) {
+      const ctx = ref.current.getContext('2d');
+      const address = props.memory.lastAccessAddress;
+      if (address && ctx) {
+        const start = 16384;
+        const addrss = parseInt(address.join(''), 2);
+        if (addrss - start >= 0) {
+          const pixels = props.memory.read(address);
+          const len = pixels.length;
+          const startPosition = (addrss - start) * len;
+          for (let i = 0; i < len; i += 1) {
+            const pixel = pixels[i];
+            const l = Math.floor((startPosition + i) / width);
+            const c = (startPosition + i) % width;
+            ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
+            ctx.fillRect(c * res, l * res, res, res);
+          }
+          ctx.fill();
+        }
       }
     }
   });
