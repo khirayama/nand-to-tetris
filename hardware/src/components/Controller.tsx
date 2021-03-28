@@ -31,6 +31,12 @@ export function Controller(props: {
     <>
       <style jsx>{styles}</style>
       <div className="container">
+        <p>
+          TODO <input type="number" min={1} max={1000} value={1} /> steps/time
+        </p>
+        <p>
+          TODO <input type="number" min={1} max={1000} value={10} /> times/s
+        </p>
         <button onClick={props.onNextClick}>Next Step</button>
         <button onClick={props.onResetClick}>Reset</button>
         <button onClick={props.onStartClick}>Start</button>
