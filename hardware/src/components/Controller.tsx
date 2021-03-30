@@ -29,6 +29,8 @@ export function Controller(props: {
   onStartClick: (event?: React.MouseEvent) => void;
   onStopClick: (event?: React.MouseEvent) => void;
   onResetClick: (event?: React.MouseEvent) => void;
+  onStepsPerTimeChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  onTimesPerSecondChange: (event: React.FormEvent<HTMLInputElement>) => void;
   onSelectChange: (event: React.FormEvent<HTMLSelectElement>) => void;
 }) {
   return (
@@ -36,8 +38,8 @@ export function Controller(props: {
       <style jsx>{styles}</style>
       <div className="container">
         <p>
-          <input type="number" min={1} max={1000} value={1} /> steps/time
-          <input type="number" min={1} max={1000} value={10} /> times/s
+          <input type="number" min={1} max={1000} value={1} onChange={props.onStepsPerTimeChange} /> steps/time
+          <input type="number" min={1} max={1000} value={10} onChange={props.onTimesPerSecondChange} /> times/s
         </p>
         <button onClick={props.onNextClick}>Next Step</button>
         <button onClick={props.onResetClick}>Reset</button>
