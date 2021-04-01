@@ -37,22 +37,17 @@ export function Controller(props: {
     <>
       <style jsx>{styles}</style>
       <div className="container">
-        <p>
-          <input type="number" min={1} max={1000} value={1} onChange={props.onStepsPerTimeChange} /> steps/time
-          <input type="number" min={1} max={1000} value={10} onChange={props.onTimesPerSecondChange} /> times/s
-        </p>
         <div>
           <button onClick={props.onNextClick}>Next Step</button>
-        </div>
-        <div>
+          <button onClick={props.onStartClick}>Start</button>
+          <button onClick={props.onStopClick}>Stop</button>
           <button onClick={props.onResetClick}>Reset</button>
         </div>
         <div>
-          <button onClick={props.onStartClick}>Start</button>
+          <input type="number" min={1} max={1000} value={1} onChange={props.onStepsPerTimeChange} /> steps/time
+          <input type="number" min={1} max={1000} value={10} onChange={props.onTimesPerSecondChange} /> times/s
         </div>
-        <div>
-          <button onClick={props.onStopClick}>Stop</button>
-        </div>
+        <div></div>
         <div>
           <span>LOAD SAMPLE</span>
           <select onChange={props.onSelectChange}>
