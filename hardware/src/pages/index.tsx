@@ -17,11 +17,16 @@ import { MemoryViewer } from '../components/MemoryViewer';
 import { CPUViewer } from '../components/CPUViewer';
 
 const styles = css`
+  .container {
+    width: 1110px;
+    margin: 0 auto;
+  }
+
   .left-column,
   .right-column {
     display: inline-block;
     vertical-align: top;
-    padding: 12px;
+    padding: 12px 6px;
     height: 100%;
   }
 
@@ -151,32 +156,34 @@ export default function IndexPage() {
       </style>
       <style jsx>{styles}</style>
 
-      <div className="left-column">
-        <Controller
-          onNextClick={onNextClick}
-          onResetClick={onResetClick}
-          onSelectChange={onSelectChange}
-          onStartClick={onStartClick}
-          onStopClick={onStopClick}
-        />
+      <div className="container">
+        <div className="left-column">
+          <Controller
+            onNextClick={onNextClick}
+            onResetClick={onResetClick}
+            onSelectChange={onSelectChange}
+            onStartClick={onStartClick}
+            onStopClick={onStopClick}
+          />
 
-        <section className="cpu-viewer-container">
-          <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
-        </section>
+          <section className="cpu-viewer-container">
+            <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
+          </section>
 
-        <section className="screen-viewer-container">
-          <ScreenViewer memory={memory} />
-        </section>
-      </div>
+          <section className="screen-viewer-container">
+            <ScreenViewer memory={memory} />
+          </section>
+        </div>
 
-      <div className="right-column">
-        <section className="rom-viewer-container">
-          <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} />
-        </section>
+        <div className="right-column">
+          <section className="rom-viewer-container">
+            <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} />
+          </section>
 
-        <section className="memory-viewer-container">
-          <MemoryViewer memory={memory} aregister={cpuStatus.aregister} addresses={displayedMemoryAddresses} />
-        </section>
+          <section className="memory-viewer-container">
+            <MemoryViewer memory={memory} aregister={cpuStatus.aregister} addresses={displayedMemoryAddresses} />
+          </section>
+        </div>
       </div>
     </>
   );
