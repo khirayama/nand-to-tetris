@@ -71,13 +71,12 @@ let timerId: number | null = null;
 export default function IndexPage() {
   const cs = cpu.status();
 
+  let keyCode: number | null = null;
   let inM: Word = memory.read(cs.aregister.slice(1) as Binary15);
 
   const [cpuStatus, setCpuStatus] = React.useState(cs);
   const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
   const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(memory.activeAddresses());
-
-  let keyCode: number | null = null;
 
   React.useEffect(() => {
     window.document.addEventListener('keydown', (event) => {
