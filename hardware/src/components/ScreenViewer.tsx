@@ -9,6 +9,10 @@ const res = 4;
 const limit = Math.pow(2, 13);
 
 const styles = css`
+  .container {
+    width: ${width + 4}px;
+  }
+
   canvas {
     width: ${width}px;
     height: ${width / 2}px;
@@ -83,7 +87,7 @@ export function ScreenViewer(props: { memory: RAMMock }) {
   return (
     <>
       <style jsx>{styles}</style>
-      <div>
+      <div className="container">
         <h3>SCREEN</h3>
         <canvas width={width * res} height={(width / 2) * res} ref={ref} />
       </div>
