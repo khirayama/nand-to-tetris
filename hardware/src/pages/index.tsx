@@ -72,7 +72,6 @@ export default function IndexPage() {
   const cs = cpu.status();
 
   let keyCode: number | null = null;
-  let inM: Word = memory.read(cs.aregister.slice(1) as Binary15);
 
   const [cpuStatus, setCpuStatus] = React.useState(cs);
   const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
@@ -96,7 +95,7 @@ export default function IndexPage() {
   function next() {
     let cs = cpu.status();
     let instruction = rom.read(cs.pc.slice(1) as Binary15);
-    let res = cpu.write(inM, instruction, 0);
+    let res = cpu.write(memory.read(cs.aregister.slice(1)), instruction, 0);
     const input = res[0];
     const load = res[1];
     const address = res[2];
@@ -106,7 +105,6 @@ export default function IndexPage() {
 
     cs = cpu.status();
 
-    inM = memory.read(address);
     setCpuStatus(cs);
   }
 
@@ -135,13 +133,11 @@ export default function IndexPage() {
 
     cpu.reset();
     setCpuStatus(cpu.status());
-    inM = zero();
   }, []);
 
   const onResetClick = React.useCallback(() => {
     cpu.reset();
     setCpuStatus(cpu.status());
-    inM = zero();
   }, []);
 
   return (
