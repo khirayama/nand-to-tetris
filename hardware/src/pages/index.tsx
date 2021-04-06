@@ -62,6 +62,17 @@ function writeInstructionsToROM(instructionStrings: string[]) {
   }
 }
 
+function next() {
+  let cs = cpu.status();
+  let instruction = rom.read(cs.pc.slice(1) as Binary15);
+  let res = cpu.write(memory.read(cs.aregister.slice(1)), instruction, 0);
+  const input = res[0];
+  const load = res[1];
+  const address = res[2];
+
+  memory.write(input, load, address);
+}
+
 writeInstructionsToROM(samples.add);
 memory.write(b('0000 0000 0000 1011'), 1, b('000 0000 0000 0000'));
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
@@ -90,17 +101,6 @@ export default function IndexPage() {
       memory.write(b('0000 0000 0000 0000'), 1, b('110 0000 0000 0000'));
     });
   }, []);
-
-  function next() {
-    let cs = cpu.status();
-    let instruction = rom.read(cs.pc.slice(1) as Binary15);
-    let res = cpu.write(memory.read(cs.aregister.slice(1)), instruction, 0);
-    const input = res[0];
-    const load = res[1];
-    const address = res[2];
-
-    memory.write(input, load, address);
-  }
 
   const onNextClick = React.useCallback(() => {
     next();
