@@ -15,6 +15,7 @@ import { ScreenViewer } from '../components/ScreenViewer';
 import { ROMViewer } from '../components/ROMViewer';
 import { MemoryViewer } from '../components/MemoryViewer';
 import { CPUViewer } from '../components/CPUViewer';
+import { next, writeInstructionsToROM } from '../helpers/utils';
 
 const styles = css`
   .container {
@@ -46,34 +47,11 @@ const styles = css`
   }
 `;
 
+const cpu = new CPU();
 const rom = new RAMMock(); // new RAM16K()
 const memory = new RAMMock(); // new Memory()
-const cpu = new CPU();
 
-function writeInstructionsToROM(instructionStrings: string[]) {
-  rom.clear();
-
-  let address = b<Word>('0000 0000 0000 0000');
-
-  for (let i = 0; i < instructionStrings.length; i += 1) {
-    const instruction = b<Word>(instructionStrings[i]);
-    rom.write(instruction, 1, address.slice(1) as Binary15);
-    address = inc16(address);
-  }
-}
-
-function next() {
-  let cs = cpu.status();
-  let instruction = rom.read(cs.pc.slice(1) as Binary15);
-  let res = cpu.write(memory.read(cs.aregister.slice(1)), instruction, 0);
-  const input = res[0];
-  const load = res[1];
-  const address = res[2];
-
-  memory.write(input, load, address);
-}
-
-writeInstructionsToROM(samples.add);
+writeInstructionsToROM(rom, samples.add);
 memory.write(b('0000 0000 0000 1011'), 1, b('000 0000 0000 0000'));
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
@@ -103,7 +81,7 @@ export default function IndexPage() {
   }, []);
 
   const onNextClick = React.useCallback(() => {
-    next();
+    next(cpu, rom, memory);
     const cs = cpu.status();
     setDisplayedMemoryAddresses(memory.activeAddresses());
     setCpuStatus(cs);
@@ -111,9 +89,12 @@ export default function IndexPage() {
 
   const onStartClick = React.useCallback(() => {
     if (timerId === null) {
-      // timerId = window.setInterval(next, 300);
       timerId = window.setInterval(() => {
-        next();
+        let count = 10;
+        while (count > 0) {
+          next(cpu, rom, memory);
+          count -= 1;
+        }
         const cs = cpu.status();
         setDisplayedMemoryAddresses(memory.activeAddresses());
         setCpuStatus(cs);
@@ -130,7 +111,7 @@ export default function IndexPage() {
 
   const onSelectChange = React.useCallback((event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value;
-    writeInstructionsToROM(samples[value]);
+    writeInstructionsToROM(rom, samples[value]);
     setDisplayedROMAddresses(rom.activeAddresses());
 
     cpu.reset();
