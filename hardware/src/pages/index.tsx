@@ -100,21 +100,24 @@ export default function IndexPage() {
     const address = res[2];
 
     memory.write(input, load, address);
-    setDisplayedMemoryAddresses(memory.activeAddresses());
-
-    cs = cpu.status();
-
-    setCpuStatus(cs);
   }
 
   const onNextClick = React.useCallback(() => {
     next();
+    const cs = cpu.status();
+    setDisplayedMemoryAddresses(memory.activeAddresses());
+    setCpuStatus(cs);
   }, []);
 
   const onStartClick = React.useCallback(() => {
     if (timerId === null) {
       // timerId = window.setInterval(next, 300);
-      timerId = window.setInterval(next, 50);
+      timerId = window.setInterval(() => {
+        next();
+        const cs = cpu.status();
+        setDisplayedMemoryAddresses(memory.activeAddresses());
+        setCpuStatus(cs);
+      }, 50);
     }
   }, []);
 
