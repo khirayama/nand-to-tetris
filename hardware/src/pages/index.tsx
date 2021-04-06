@@ -67,11 +67,10 @@ memory.write(b('0000 0000 0000 1011'), 1, b('000 0000 0000 0000'));
 memory.write(b('0000 0000 0000 1001'), 1, b('000 0000 0000 0001'));
 
 let timerId: number | null = null;
+let keyCode: number | null = null;
 
 export default function IndexPage() {
   const cs = cpu.status();
-
-  let keyCode: number | null = null;
 
   const [cpuStatus, setCpuStatus] = React.useState(cs);
   const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
