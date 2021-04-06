@@ -59,11 +59,11 @@ let timerId: number | null = null;
 let keyCode: number | null = null;
 
 export default function IndexPage() {
-  const cs = cpu.status();
-
-  const [cpuStatus, setCpuStatus] = React.useState(cs);
-  const [displayedROMAddresses, setDisplayedROMAddresses] = React.useState<Binary15[]>(rom.activeAddresses());
-  const [displayedMemoryAddresses, setDisplayedMemoryAddresses] = React.useState<Binary15[]>(memory.activeAddresses());
+  const [state, setState] = React.useState({
+    cpu: cpu.status(),
+    displayedROMAddresses: rom.activeAddresses(),
+    displayedMemoryAddresses: memory.activeAddresses(),
+  });
 
   React.useEffect(() => {
     window.document.addEventListener('keydown', (event) => {
@@ -82,9 +82,11 @@ export default function IndexPage() {
 
   const onNextClick = React.useCallback(() => {
     next(cpu, rom, memory);
-    const cs = cpu.status();
-    setDisplayedMemoryAddresses(memory.activeAddresses());
-    setCpuStatus(cs);
+    setState({
+      cpu: cpu.status(),
+      displayedROMAddresses: rom.activeAddresses(),
+      displayedMemoryAddresses: memory.activeAddresses(),
+    });
   }, []);
 
   const onStartClick = React.useCallback(() => {
@@ -95,9 +97,11 @@ export default function IndexPage() {
           next(cpu, rom, memory);
           count -= 1;
         }
-        const cs = cpu.status();
-        setDisplayedMemoryAddresses(memory.activeAddresses());
-        setCpuStatus(cs);
+        setState({
+          cpu: cpu.status(),
+          displayedROMAddresses: rom.activeAddresses(),
+          displayedMemoryAddresses: memory.activeAddresses(),
+        });
       }, 50);
     }
   }, []);
@@ -112,15 +116,21 @@ export default function IndexPage() {
   const onSelectChange = React.useCallback((event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value;
     writeInstructionsToROM(rom, samples[value]);
-    setDisplayedROMAddresses(rom.activeAddresses());
-
     cpu.reset();
-    setCpuStatus(cpu.status());
+    setState({
+      cpu: cpu.status(),
+      displayedROMAddresses: rom.activeAddresses(),
+      displayedMemoryAddresses: memory.activeAddresses(),
+    });
   }, []);
 
   const onResetClick = React.useCallback(() => {
     cpu.reset();
-    setCpuStatus(cpu.status());
+    setState({
+      cpu: cpu.status(),
+      displayedROMAddresses: rom.activeAddresses(),
+      displayedMemoryAddresses: memory.activeAddresses(),
+    });
   }, []);
 
   return (
@@ -145,7 +155,7 @@ export default function IndexPage() {
           />
 
           <section className="cpu-viewer-container">
-            <CPUViewer pc={cpuStatus.pc} aregister={cpuStatus.aregister} dregister={cpuStatus.dregister} />
+            <CPUViewer pc={state.cpu.pc} aregister={state.cpu.aregister} dregister={state.cpu.dregister} />
           </section>
 
           <section className="screen-viewer-container">
@@ -155,11 +165,11 @@ export default function IndexPage() {
 
         <div className="right-column">
           <section className="rom-viewer-container">
-            <ROMViewer rom={rom} pc={cpuStatus.pc} addresses={displayedROMAddresses} />
+            <ROMViewer rom={rom} pc={state.cpu.pc} addresses={state.displayedROMAddresses} />
           </section>
 
           <section className="memory-viewer-container">
-            <MemoryViewer memory={memory} aregister={cpuStatus.aregister} addresses={displayedMemoryAddresses} />
+            <MemoryViewer memory={memory} aregister={state.cpu.aregister} addresses={state.displayedMemoryAddresses} />
           </section>
         </div>
       </div>
