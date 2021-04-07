@@ -3,9 +3,8 @@ import { css } from 'styled-jsx/css';
 import Head from 'next/head';
 
 import { CPU } from '../hardware/CPU';
-import { b, zero } from '../hardware/helpers';
-import { inc16 } from '../hardware/inc16';
-import { Binary15, Word } from '../hardware/types';
+import { b } from '../hardware/helpers';
+import { Word } from '../hardware/types';
 import { samples } from '../samples';
 
 import { RAMMock } from '../helpers/RAMMock';
