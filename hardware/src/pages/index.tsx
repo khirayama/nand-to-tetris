@@ -18,7 +18,8 @@ import { next, writeInstructionsToROM } from '../helpers/utils';
 
 const styles = css`
   .container {
-    width: 1110px;
+    width: 1200px;
+    height: 100%;
     margin: 0 auto;
   }
 
