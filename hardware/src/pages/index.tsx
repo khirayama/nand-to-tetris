@@ -59,6 +59,8 @@ let timerId: number | null = null;
 let keyCode: number | null = null;
 
 export default function IndexPage() {
+  const [stepPerFrame, setStepsPerFrame] = React.useState<number>(1);
+
   const [state, setState] = React.useState({
     cpu: cpu.status(),
     displayedROMAddresses: rom.activeAddresses(),
@@ -92,19 +94,18 @@ export default function IndexPage() {
   const onStartClick = React.useCallback(() => {
     if (timerId === null) {
       timerId = window.setInterval(() => {
-        let count = 10;
-        while (count > 0) {
+        let count = stepPerFrame;
+        for (let i = 0; i < count; i += 1) {
           next(cpu, rom, memory);
-          count -= 1;
         }
         setState({
           cpu: cpu.status(),
           displayedROMAddresses: rom.activeAddresses(),
           displayedMemoryAddresses: memory.activeAddresses(),
         });
-      }, 50);
+      }, 1000 / 60);
     }
-  }, []);
+  }, [stepPerFrame]);
 
   const onStopClick = React.useCallback(() => {
     if (timerId !== null) {
@@ -133,6 +134,11 @@ export default function IndexPage() {
     });
   }, []);
 
+  const onStepsPerSecondChange = React.useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    const value = Number(event.currentTarget.value);
+    setStepsPerFrame(value);
+  }, []);
+
   return (
     <>
       <Head>
@@ -147,11 +153,13 @@ export default function IndexPage() {
       <div className="container">
         <div className="left-column">
           <Controller
+            stepPerFrame={stepPerFrame}
             onNextClick={onNextClick}
-            onResetClick={onResetClick}
-            onSelectChange={onSelectChange}
             onStartClick={onStartClick}
             onStopClick={onStopClick}
+            onResetClick={onResetClick}
+            onSelectChange={onSelectChange}
+            onStepsPerSecondChange={onStepsPerSecondChange}
           />
 
           <section className="cpu-viewer-container">

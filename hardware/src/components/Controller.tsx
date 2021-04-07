@@ -21,17 +21,18 @@ const styles = css`
 
   input[type='number'] {
     text-align: right;
+    border-bottom: solid 1px #aaa;
   }
 `;
 
 export function Controller(props: {
+  stepPerFrame: number;
   onNextClick: (event?: React.MouseEvent) => void;
   onStartClick: (event?: React.MouseEvent) => void;
   onStopClick: (event?: React.MouseEvent) => void;
   onResetClick: (event?: React.MouseEvent) => void;
-  onStepsPerTimeChange: (event: React.FormEvent<HTMLInputElement>) => void;
-  onTimesPerSecondChange: (event: React.FormEvent<HTMLInputElement>) => void;
   onSelectChange: (event: React.FormEvent<HTMLSelectElement>) => void;
+  onStepsPerSecondChange: (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
@@ -44,10 +45,15 @@ export function Controller(props: {
           <button onClick={props.onResetClick}>Reset</button>
         </div>
         <div>
-          <input type="number" min={1} max={1000} value={1} onChange={props.onStepsPerTimeChange} /> steps/time
-          <input type="number" min={1} max={1000} value={10} onChange={props.onTimesPerSecondChange} /> times/s
+          <input
+            type="number"
+            min={1}
+            max={100000}
+            value={props.stepPerFrame}
+            onChange={props.onStepsPerSecondChange}
+          />{' '}
+          steps/frame = {Math.floor((props.stepPerFrame * 1000) / 60)} steps/second
         </div>
-        <div></div>
         <div>
           <span>LOAD SAMPLE</span>
           <select onChange={props.onSelectChange}>
