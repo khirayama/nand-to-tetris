@@ -62,25 +62,27 @@ export function ScreenViewer(props: { memory: RAMMock }) {
 
   React.useEffect(() => {
     if (ref.current) {
+      const start = 16384;
       const ctx = ref.current.getContext('2d');
-      const address = props.memory.lastAccessAddress;
-      if (address && ctx) {
-        const start = 16384;
-        const addrss = parseInt(address.join(''), 2);
-        if (addrss - start >= 0) {
-          const pixels = props.memory.read(address);
-          const len = pixels.length;
-          const startPosition = (addrss - start) * len;
-          for (let i = 0; i < len; i += 1) {
-            const pixel = pixels[i];
-            const l = Math.floor((startPosition + i) / width);
-            const c = (startPosition + i) % width;
-            ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
-            ctx.fillRect(c * res, l * res, res, res);
+      for (const address of props.memory.lastAccessAddresses) {
+        if (address && ctx) {
+          const addrss = parseInt(address.join(''), 2);
+          if (addrss - start >= 0) {
+            const pixels = props.memory.read(address);
+            const len = pixels.length;
+            const startPosition = (addrss - start) * len;
+            for (let i = 0; i < len; i += 1) {
+              const pixel = pixels[i];
+              const l = Math.floor((startPosition + i) / width);
+              const c = (startPosition + i) % width;
+              ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
+              ctx.fillRect(c * res, l * res, res, res);
+            }
+            ctx.fill();
           }
-          ctx.fill();
         }
       }
+      props.memory.lastAccessAddresses = [];
     }
   });
 
