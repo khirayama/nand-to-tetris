@@ -4,7 +4,11 @@ import { css } from 'styled-jsx/css';
 const styles = css`
   .container {
     width: 100%;
-    padding: 12px;
+    padding: 0 12px;
+  }
+
+  .container div + div {
+    padding: 12px 0;
   }
 
   button,
@@ -22,6 +26,10 @@ const styles = css`
   input[type='number'] {
     text-align: right;
     border-bottom: solid 1px #aaa;
+  }
+
+  label {
+    padding-right: 4px;
   }
 `;
 
@@ -42,7 +50,7 @@ export function Controller(props: {
           <button onClick={props.onNextClick}>Next Step</button>
           <button onClick={props.onStartClick}>Start</button>
           <button onClick={props.onStopClick}>Stop</button>
-          <button onClick={props.onResetClick}>Reset</button>
+          <button onClick={props.onResetClick}>Reset CPU</button>
         </div>
         <div>
           <input
@@ -52,10 +60,10 @@ export function Controller(props: {
             value={props.stepPerFrame}
             onChange={props.onStepsPerSecondChange}
           />{' '}
-          steps/frame = {Math.floor((props.stepPerFrame * 1000) / 60)} steps/second
+          steps/frame = {Math.floor((props.stepPerFrame * 1000) / 60).toLocaleString()} steps/second
         </div>
         <div>
-          <span>LOAD SAMPLE</span>
+          <label>LOAD ROM</label>
           <select onChange={props.onSelectChange}>
             <option value="add">Add</option>
             <option value="max">Max</option>
