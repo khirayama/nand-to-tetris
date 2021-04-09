@@ -63,7 +63,8 @@ export function ScreenViewer(props: { memory: RAMMock }) {
   React.useEffect(() => {
     if (ref.current) {
       const start = 16384;
-      const ctx = ref.current.getContext('2d');
+      const offscreen = new OffscreenCanvas(ref.current.width, ref.current.height);
+      const ctx = offscreen.getContext('2d');
       for (const address of props.memory.lastAccessAddresses) {
         if (address && ctx) {
           const addrss = parseInt(address.join(''), 2);
@@ -81,6 +82,7 @@ export function ScreenViewer(props: { memory: RAMMock }) {
             ctx.fill();
           }
         }
+        ref.current.getContext('2d')?.drawImage(offscreen, 0, 0);
       }
       props.memory.lastAccessAddresses = [];
     }
