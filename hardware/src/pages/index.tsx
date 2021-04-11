@@ -142,6 +142,9 @@ export default function IndexPage() {
   return (
     <>
       <Head>
+        <title>CPU Emulator of Hack Computer of Nand2Tetris on Web</title>
+        <meta name="description" content="CPU Emulator of Hack Computer of Nand2Tetris on Web" />
+        <meta name="keywords" content="nand2tetris,nand,tetris,CPU Emulator, Hack Computer,web" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
       </Head>
