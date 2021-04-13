@@ -1,4 +1,12 @@
+/* OS */
 .DS_Store
 
-/hardware/node_modules
+/* nodejs */
+/node_modules
+
+/* dependencies */
+/.next
+/next-env.d.ts
+
+/* project */
 /references
