@@ -41,6 +41,7 @@ export function Controller(props: {
   onResetClick: (event?: React.MouseEvent) => void;
   onSelectChange: (event: React.FormEvent<HTMLSelectElement>) => void;
   onStepsPerSecondChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  onFileChange: (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
@@ -71,6 +72,10 @@ export function Controller(props: {
             <option value="fill">Fill</option>
             <option value="mult">Mult</option>
           </select>
+        </div>
+        <div>
+          <input type="file" name="files" onChange={props.onFileChange} />
+          <output />
         </div>
       </div>
     </>
