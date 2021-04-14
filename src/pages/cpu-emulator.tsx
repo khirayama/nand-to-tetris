@@ -94,8 +94,7 @@ export default function IndexPage() {
   const onStartClick = React.useCallback(() => {
     if (timerId === null) {
       timerId = window.setInterval(() => {
-        let count = stepPerFrame;
-        for (let i = 0; i < count; i += 1) {
+        for (let i = 0; i < stepPerFrame; i += 1) {
           next(cpu, rom, memory);
         }
         setState({
