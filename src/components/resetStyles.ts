@@ -36,7 +36,8 @@ export const resetStyles = css.global`
   td,
   small,
   img,
-  i {
+  i,
+  output {
     box-sizing: border-box;
     margin: 0;
     padding: 0;

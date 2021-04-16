@@ -12,7 +12,8 @@ const styles = css`
   }
 
   button,
-  select {
+  select,
+  input[type='file'] {
     padding: 4px 8px;
     border-radius: 2px;
     border: solid 1px #333;
@@ -75,7 +76,6 @@ export function Controller(props: {
         </div>
         <div>
           <input type="file" name="files" onChange={props.onFileChange} />
-          <output />
         </div>
       </div>
     </>
