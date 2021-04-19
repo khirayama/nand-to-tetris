@@ -1,4 +1,4 @@
-class Parser {}
+import { Parser } from './Parser';
 
 class Code {}
 
