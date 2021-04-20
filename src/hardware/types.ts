@@ -8,6 +8,8 @@ export type Binary4 = [...Binary2, ...Binary2];
 
 export type Binary6 = [...Binary4, ...Binary2];
 
+export type Binary7 = [...Binary4, ...Binary3];
+
 export type Binary8 = [...Binary4, ...Binary4];
 
 export type Binary9 = [...Binary6, ...Binary3];
