@@ -1,8 +1,6 @@
 import { Parser } from './Parser';
-
-class Code {}
-
-class SymbolTable {}
+import { Code } from './Code';
+import { SymbolTable } from './SymbolTable';
 
 export function assembler() {
   const parser = new Parser();
