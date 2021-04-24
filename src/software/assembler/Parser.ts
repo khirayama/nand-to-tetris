@@ -3,6 +3,7 @@ const CommandType = {
   C_COMMAND: 'C_COMMAND',
   L_COMMAND: 'L_COMMAND',
 } as const;
+
 type CommandType = typeof CommandType[keyof typeof CommandType];
 
 export class Parser {
