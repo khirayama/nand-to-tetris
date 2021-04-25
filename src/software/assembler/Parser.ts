@@ -6,8 +6,14 @@ const CommandType = {
 
 type CommandType = typeof CommandType[keyof typeof CommandType];
 
+type Instruction= string;
+
 export class Parser {
-  constructor() {}
+  private instructions: Instruction[];
+
+  constructor(instructions: Instruction[] /* TODO FilePathが正しいかも？ */) {
+    this.instructions = instructions;
+  }
 
   private hasMoreCommands(): boolean {
     return true;
