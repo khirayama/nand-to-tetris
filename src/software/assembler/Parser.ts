@@ -11,6 +11,8 @@ type Instruction = string;
 export class Parser {
   private instructions: Instruction[];
 
+  private lineCounter: number = 0;
+
   /* TODO
    * Originally, we should give a file path,
    * but we have to consider how to run it on web browser.
@@ -20,29 +22,33 @@ export class Parser {
     this.instructions = instructions;
   }
 
-  private hasMoreCommands(): boolean {
+  private currentCommand() {
+    return this.instructions[this.lineCounter];
+  }
+
+  public hasMoreCommands(): boolean {
     return true;
   }
 
-  private advance(): void {}
+  public advance(): void {}
 
-  private commandType(): CommandType {
+  public commandType(): CommandType {
     return CommandType.A_COMMAND;
   }
 
-  private symbol(): string {
+  public symbol(): string {
     return '';
   }
 
-  private dest(): string {
+  public dest(): string {
     return '';
   }
 
-  private comp(): string {
+  public comp(): string {
     return '';
   }
 
-  private jump(): string {
+  public jump(): string {
     return '';
   }
 }
