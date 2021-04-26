@@ -27,7 +27,7 @@ export class Parser {
   }
 
   public hasMoreCommands(): boolean {
-    return true;
+    return this.instructions.length > this.lineCounter;
   }
 
   public advance(): void {}
