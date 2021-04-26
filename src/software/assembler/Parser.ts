@@ -6,12 +6,17 @@ const CommandType = {
 
 type CommandType = typeof CommandType[keyof typeof CommandType];
 
-type Instruction= string;
+type Instruction = string;
 
 export class Parser {
   private instructions: Instruction[];
 
-  constructor(instructions: Instruction[] /* TODO FilePathが正しいかも？ */) {
+  /* TODO
+   * Originally, we should give a file path,
+   * but we have to consider how to run it on web browser.
+   * For now, I set instructions directry.
+   */
+  constructor(instructions: Instruction[]) {
     this.instructions = instructions;
   }
 
