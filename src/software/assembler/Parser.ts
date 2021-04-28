@@ -30,7 +30,13 @@ export class Parser {
     return this.instructions.length > this.lineCounter;
   }
 
-  public advance(): void {}
+  public advance(): void {
+    if (!this.hasMoreCommands()) {
+      return;
+    }
+
+    this.lineCounter = this.lineCounter + 1;
+  }
 
   public commandType(): CommandType {
     return CommandType.A_COMMAND;
