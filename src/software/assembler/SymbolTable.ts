@@ -1,13 +1,13 @@
 export class SymbolTable {
   constructor() {}
 
-  private addEntry(sym: string, address: number): void {}
+  public addEntry(sym: string, address: number): void {}
 
-  private contains(sym: string): boolean {
+  public contains(sym: string): boolean {
     return true;
   }
 
-  private getAddress(sym: string): number {
+  public getAddress(sym: string): number {
     return 0;
   }
 }
