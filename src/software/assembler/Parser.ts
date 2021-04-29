@@ -56,4 +56,8 @@ export class Parser {
   public jump(): string {
     return '';
   }
+
+  public reset(): void {
+    this.pos = 0;
+  }
 }
