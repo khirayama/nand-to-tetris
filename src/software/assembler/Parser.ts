@@ -11,7 +11,7 @@ type Instruction = string;
 export class Parser {
   private instructions: Instruction[];
 
-  private lineCounter: number = 0;
+  private pos: number = 0;
 
   /* TODO
    * Originally, we should give a file path,
@@ -23,19 +23,18 @@ export class Parser {
   }
 
   private currentCommand() {
-    return this.instructions[this.lineCounter];
+    return this.instructions[this.pos];
   }
 
   public hasMoreCommands(): boolean {
-    return this.instructions.length > this.lineCounter;
+    return this.instructions.length > this.pos;
   }
 
   public advance(): void {
     if (!this.hasMoreCommands()) {
       return;
     }
-
-    this.lineCounter = this.lineCounter + 1;
+    this.pos = this.pos + 1;
   }
 
   public commandType(): CommandType {
