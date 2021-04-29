@@ -1,12 +1,12 @@
-const CommandType = {
+export const CommandType = {
   A_COMMAND: 'A_COMMAND',
   C_COMMAND: 'C_COMMAND',
   L_COMMAND: 'L_COMMAND',
 } as const;
 
-type CommandType = typeof CommandType[keyof typeof CommandType];
+export type CommandType = typeof CommandType[keyof typeof CommandType];
 
-type Instruction = string;
+export type Instruction = string;
 
 export class Parser {
   private instructions: Instruction[];
