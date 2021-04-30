@@ -28,4 +28,21 @@ export function assembler() {
   }
 
   parser.reset();
+
+  const machineCodes = [];
+
+  while (parser.hasMoreCommands()) {
+    const commandType = parser.commandType();
+
+    if (commandType === CommandType.C_COMMAND) {
+      const destMnemonic = parser.dest();
+      const compMnemonic = parser.comp();
+      const jumpMnemonic = parser.jump();
+
+      const dest = code.dest(destMnemonic);
+      const comp = code.comp(compMnemonic);
+      const jump = code.jump(jumpMnemonic);
+      machineCodes.push(`111${comp}${dest}${jump}`);
+    }
+  }
 }
