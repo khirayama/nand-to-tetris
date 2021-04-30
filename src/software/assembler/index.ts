@@ -8,7 +8,7 @@ export function assembler() {
   const symbolTable = new SymbolTable();
 
   let ROMAddress = 0;
-  const RAMAddress = 16;
+  let RAMAddress = 16;
 
   while (parser.hasMoreCommands()) {
     const commandType = parser.commandType();
@@ -44,5 +44,24 @@ export function assembler() {
       const jump = code.jump(jumpMnemonic);
       machineCodes.push(`111${comp}${dest}${jump}`);
     }
+
+    if (commandType === CommandType.A_COMMAND) {
+      const sym = parser.symbol();
+      if (isNaN(parseInt(sym, 10))) {
+        let address = '';
+        if (symbolTable.contains(sym)) {
+          address = symbolTable.getAddress(sym);
+        } else {
+          address = `0x0000${RAMAddress.toString(16).slice(-4)}`;
+          symbolTable.addEntry(sym, address);
+          RAMAddress = RAMAddress + 1;
+        }
+        machineCodes.push(`0000000000000000${parseInt(address, 16).toString(2)}`.slice(-16));
+      } else {
+        machineCodes.push(`0000000000000000${parseInt(sym, 10).toString(2)}`.slice(-16));
+      }
+    }
+    parser.advance();
   }
+  console.log(machineCodes.join('\n'));
 }
