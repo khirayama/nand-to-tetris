@@ -1,9 +1,9 @@
-import { Parser, CommandType } from './Parser';
+import { Parser, CommandType, Instruction } from './Parser';
 import { Code } from './Code';
 import { SymbolTable } from './SymbolTable';
 
-export function assembler() {
-  const parser = new Parser([]);
+export function assembler(instructions: Instruction[]) {
+  const parser = new Parser(instructions);
   const code = new Code();
   const symbolTable = new SymbolTable();
 
