@@ -17,9 +17,9 @@ export function assembler(instructions: Instruction[]) {
     } else if (commandType === CommandType.L_COMMAND) {
       const sym = parser.symbol();
 
-      if (!symbolTable.constants(sym)) {
+      if (!symbolTable.contains(sym)) {
         const address = '0x' + ('0000' + ROMAddress.toString(16).slice(-4));
-        symbolTable.addEntry(sym, address);
+        symbolTable.addEntry(sym, parseInt(address, 2));
       }
     } else {
       throw new Error('Invalid Command Type');
@@ -53,7 +53,7 @@ export function assembler(instructions: Instruction[]) {
           address = symbolTable.getAddress(sym);
         } else {
           address = `0x0000${RAMAddress.toString(16).slice(-4)}`;
-          symbolTable.addEntry(sym, address);
+          symbolTable.addEntry(sym, parseInt(address, 2));
           RAMAddress = RAMAddress + 1;
         }
         machineCodes.push(`0000000000000000${parseInt(address, 16).toString(2)}`.slice(-16));
