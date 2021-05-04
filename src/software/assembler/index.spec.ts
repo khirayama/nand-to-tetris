@@ -1,8 +1,8 @@
 import assert from 'power-assert';
 import { assembler } from './';
 
-describe('assembler', function() {
-  it('Run correctly' function() {
+describe('assembler', function () {
+  it('Run correctly', function () {
     const addASM = ['@2', 'D=A', '@3', 'D=D+A', '@0', 'M=D'];
 
     const addHack = [
