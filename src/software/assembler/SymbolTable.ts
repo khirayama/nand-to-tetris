@@ -7,9 +7,6 @@ export class SymbolTable {
     return true;
   }
 
-  // public getAddress(sym: string): number {
-  //   return 0;
-  // }
   public getAddress(sym: string): string {
     return '';
   }
