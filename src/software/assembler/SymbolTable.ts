@@ -8,6 +8,6 @@ export class SymbolTable {
   }
 
   public getAddress(sym: string): string {
-    return '';
+    return '0';
   }
 }
