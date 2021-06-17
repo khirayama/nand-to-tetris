@@ -62,7 +62,7 @@ export function ScreenViewer(props: { memory: RAMMock }) {
 
   React.useEffect(() => {
     if (ref.current) {
-      const start = 16384 /* 2 ^ 14 */;
+      const start = 16384; /* 2 ^ 14 */
       const ctx = ref.current.getContext('2d');
       for (const address of props.memory.lastAccessAddresses) {
         if (address && ctx) {
