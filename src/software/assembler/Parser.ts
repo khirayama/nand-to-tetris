@@ -41,10 +41,23 @@ export class Parser {
   }
 
   public commandType(): CommandType {
-    return CommandType.A_COMMAND;
+    if (this.currentCommand().indexOf('@') === 0) {
+      return CommandType.A_COMMAND;
+    } else if (this.currentCommand().indexOf('(') === 0) {
+      return CommandType.L_COMMAND;
+    } else {
+      return CommandType.C_COMMAND;
+    }
   }
 
   public symbol(): string {
+    if (this.commandType() === CommandType.C_COMMAND) {
+      throw new Error('commandType should be C_COMMAND when call symbol.');
+    } else if (this.commandType() === CommandType.A_COMMAND) {
+      return this.currentCommand().slice(1);
+    } else if (this.commandType() === CommandType.L_COMMAND) {
+      return this.currentCommand().slice(1, -1);
+    }
     return '';
   }
 
