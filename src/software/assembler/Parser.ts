@@ -61,16 +61,31 @@ export class Parser {
     return '';
   }
 
-  public dest(): string {
-    return '';
+  public dest(): string | null {
+    if (this.commandType() !== CommandType.C_COMMAND) {
+      throw new Error('commandType should be C_COMMAND when call dest.');
+    }
+    if (this.currentCommand().indexOf(';') !== -1) {
+      return null;
+    }
+    return this.currentCommand().split('=')[0];
   }
 
   public comp(): string {
-    return '';
+    if (this.commandType() !== CommandType.C_COMMAND) {
+      throw new Error('commandType should be C_COMMAND when call comp.');
+    }
+    if (this.currentCommand().indexOf(';') !== -1) {
+      return this.currentCommand().split(';')[0];
+    }
+    return this.currentCommand().split('=')[1];
   }
 
   public jump(): string {
-    return '';
+    if (this.commandType() !== CommandType.C_COMMAND) {
+      throw new Error('commandType should be C_COMMAND when call jump.');
+    }
+    return this.currentCommand().split(';')[1];
   }
 
   public reset(): void {
