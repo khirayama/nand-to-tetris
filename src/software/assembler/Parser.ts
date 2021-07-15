@@ -19,7 +19,7 @@ export class Parser {
    * For now, I set instructions directry.
    */
   constructor(code: string) {
-    const lines = code.replace(/ /g, '').split(/\r/n/);
+    const lines = code.replace(/ /g, '').split(/\n/);
     this.instructions = lines.filter((line) => {
       return line !== '' && line.indexOf('//') !== 0;
     });
