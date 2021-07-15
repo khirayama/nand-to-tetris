@@ -55,10 +55,16 @@ export class Code {
   }
 
   public comp(mnemonic: string): Binary7 {
+    if (!compDict[mnemonic]) {
+      return [0, 0, 0, 0, 0, 0, 0];
+    }
     return b<Binary7>(compDict[mnemonic]);
   }
 
   public jump(mnemonic: string): Binary3 {
+    if (!jumpDict[mnemonic]) {
+      return [0, 0, 0];
+    }
     return b<Binary3>(jumpDict[mnemonic]);
   }
 }
