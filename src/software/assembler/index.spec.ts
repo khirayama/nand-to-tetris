@@ -2,7 +2,7 @@ import assert from 'power-assert';
 import { assembler } from './';
 
 describe('assembler', function () {
-  it('Run correctly', function () {
+  it('Run correctly with Add asm', function () {
     const addASM = ['@2', 'D=A', '@3', 'D=D+A', '@0', 'M=D'];
 
     const addHack = [
