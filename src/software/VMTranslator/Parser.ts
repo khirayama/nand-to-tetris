@@ -1,6 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
 export const CommandType = {
   C_ARITHMETIC: 'C_ARITHMETIC',
   C_PUSH: 'C_PUSH',

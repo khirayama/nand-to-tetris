@@ -1,10 +1,11 @@
 import { Parser, CommandType } from './Parser';
 import { CodeWriter } from './CodeWriter';
 
+// TODO: Remove fileName
 export function vmTranslator(fileName: string, vm: { [key: string]: string }): string {
   const codeWriter = new CodeWriter();
-  for (const filePath of Object.keys(vm).sort()) {
-    translate(fileName, vm[filePath], codeWriter);
+  for (const key of Object.keys(vm).sort()) {
+    translate(fileName, vm[key], codeWriter);
   }
   return codeWriter.output;
 }
