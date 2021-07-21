@@ -34,7 +34,7 @@ add                    // returns fib(n-1) + fib(n-2)
 return
       `,
     };
-    const asm = vmTranslator('fibonacci', vm);
+    const asm = vmTranslator(vm);
     assert.deepEqual(
       asm.trim(),
       `@256

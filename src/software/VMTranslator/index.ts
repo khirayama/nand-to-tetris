@@ -1,18 +1,17 @@
 import { Parser, CommandType } from './Parser';
 import { CodeWriter } from './CodeWriter';
 
-// TODO: Remove fileName
-export function vmTranslator(fileName: string, vm: { [key: string]: string }): string {
+export function vmTranslator(vm: { [key: string]: string }): string {
   const codeWriter = new CodeWriter();
   for (const key of Object.keys(vm).sort()) {
-    translate(fileName, vm[key], codeWriter);
+    translate(vm[key], codeWriter);
   }
   return codeWriter.output;
 }
 
-function translate(fileName: string, code: string, codeWriter: CodeWriter) {
+function translate(code: string, codeWriter: CodeWriter) {
   const parser = new Parser(code);
-  codeWriter.setFileName(fileName);
+  codeWriter.setFileName('dummy'); // It's for correct follow
 
   while (parser.hasMoreCommands()) {
     switch (parser.commandType()) {
