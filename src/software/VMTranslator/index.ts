@@ -11,7 +11,7 @@ export function vmTranslator(vm: { [key: string]: string }): string {
 
 function translate(code: string, codeWriter: CodeWriter) {
   const parser = new Parser(code);
-  codeWriter.setFileName('dummy'); // It's for correct follow
+  codeWriter.setFileName('dummy'); // It's for using file system
 
   while (parser.hasMoreCommands()) {
     switch (parser.commandType()) {
