@@ -11,9 +11,6 @@ import { RAMMock } from '../helpers/RAMMock';
 import { resetStyles } from '../components/resetStyles';
 import { Controller } from '../components/Controller';
 import { ScreenViewer } from '../components/ScreenViewer';
-import { ROMViewer } from '../components/ROMViewer';
-import { MemoryViewer } from '../components/MemoryViewer';
-import { CPUViewer } from '../components/CPUViewer';
 import { next, writeInstructionsToROM } from '../helpers/utils';
 
 const styles = css`
@@ -173,10 +170,6 @@ export default function IndexPage() {
             onStepsPerSecondChange={onStepsPerSecondChange}
             onFileChange={onFileChange}
           />
-
-          <section className="cpu-viewer-container">
-            <CPUViewer pc={state.cpu.pc} aregister={state.cpu.aregister} dregister={state.cpu.dregister} />
-          </section>
 
           <section className="screen-viewer-container">
             <ScreenViewer memory={memory} />
