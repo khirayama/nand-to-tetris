@@ -72,6 +72,7 @@ export function Controller(props: {
             <option value="rect">Rect</option>
             <option value="fill">Fill</option>
             <option value="mult">Mult</option>
+            <option value="outputTest">Output Test</option>
           </select>
         </div>
         <div>
