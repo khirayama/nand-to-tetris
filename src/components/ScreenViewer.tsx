@@ -30,13 +30,14 @@ const styles = css`
 
 export function ScreenViewer(props: { memory: RAMMock }) {
   const ref = React.createRef<HTMLCanvasElement>();
+  const start = 16384; /* 0100 0000 0000 0000 = 2 ^ 14 */
 
   React.useEffect(() => {
     if (ref.current) {
       const ctx = ref.current.getContext('2d');
       if (ctx) {
         const result = [];
-        let current = 16384; /* 0100 0000 0000 0000 */
+        let current = start;
         for (let i = 0; i < limit; i += 1) {
           const address = current
             .toString(2)
@@ -62,7 +63,6 @@ export function ScreenViewer(props: { memory: RAMMock }) {
 
   React.useEffect(() => {
     if (ref.current) {
-      const start = 16384; /* 2 ^ 14 */
       const ctx = ref.current.getContext('2d');
       for (const address of props.memory.lastAccessAddresses) {
         if (address && ctx) {
