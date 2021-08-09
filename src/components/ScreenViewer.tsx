@@ -78,11 +78,11 @@ export function ScreenViewer(props: { memory: RAMMock }) {
               ctx.fillStyle = pixel === 1 ? 'rgba(0, 0, 0)' : 'rgb(233, 233, 233)';
               ctx.fillRect(c * res, l * res, res, res);
             }
-            ctx.fill();
           }
         }
-        ref.current.getContext('2d')?.drawImage(ref.current, 0, 0);
       }
+      ctx.fill();
+      ref.current.getContext('2d')?.drawImage(ref.current, 0, 0);
       props.memory.lastAccessAddresses = [];
     }
   });
