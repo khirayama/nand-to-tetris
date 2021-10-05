@@ -7,6 +7,7 @@
 /* dependencies */
 /.next
 /next-env.d.ts
+/out
 
 /* project */
 /references
