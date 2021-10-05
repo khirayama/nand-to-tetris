@@ -135,14 +135,14 @@ export default function IndexPage() {
     setStepsPerFrame(value);
   }, []);
 
-  const onFileChange = React.useCallback((event: React.FormEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log(reader.result);
-    };
-    reader.readAsText(file);
-  });
+  // const onFileChange = React.useCallback((event: React.FormEvent<HTMLInputElement>) => {
+  //   const file = event.currentTarget.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     console.log(reader.result);
+  //   };
+  //   reader.readAsText(file);
+  // });
 
   return (
     <>
@@ -168,7 +168,6 @@ export default function IndexPage() {
             onResetClick={onResetClick}
             onSelectChange={onSelectChange}
             onStepsPerSecondChange={onStepsPerSecondChange}
-            onFileChange={onFileChange}
           />
 
           <section className="screen-viewer-container">

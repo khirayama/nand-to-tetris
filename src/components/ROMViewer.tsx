@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { css } from 'styled-jsx/css';
 
-import { RAMMock } from '../hardware/RAMMock';
+import { RAMMock } from '../helpers/RAMMock';
 import { b2s } from '../hardware/helpers';
 import { Binary15, Word } from '../hardware/types';
 

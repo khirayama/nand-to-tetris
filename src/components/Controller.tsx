@@ -42,7 +42,7 @@ export function Controller(props: {
   onResetClick: (event?: React.MouseEvent) => void;
   onSelectChange: (event: React.FormEvent<HTMLSelectElement>) => void;
   onStepsPerSecondChange: (event: React.FormEvent<HTMLInputElement>) => void;
-  onFileChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  // onFileChange: (event: React.FormEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
@@ -75,9 +75,9 @@ export function Controller(props: {
             <option value="outputTest">Output Test</option>
           </select>
         </div>
-        <div>
-          <input type="file" name="files" onChange={props.onFileChange} />
-        </div>
+        {/* <div> */}
+        {/*   <input type="file" name="files" onChange={props.onFileChange} /> */}
+        {/* </div> */}
       </div>
     </>
   );
